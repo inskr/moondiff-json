@@ -2,15 +2,45 @@
 package "local/moondiff-json/src/input"
 
 import {
+  "local/moondiff-json/src/model/base",
+  "moonbitlang/core/debug",
   "moonbitstack/moonjson",
 }
 
 // Values
+pub fn normalize_number(String) -> NumberKey raise @base.DiffError
+
+pub fn parse_document(String, @base.Side, @base.Limits) -> Document raise @base.DiffError
+
 pub fn parse_input(String, max_depth? : Int) -> Json raise @moonjson.Malformed
 
 // Errors
 
 // Types and methods
+pub struct Document {
+  node_count : Int
+  // private fields
+}
+pub fn Document::root(Self) -> Value
+
+pub struct NumberKey {
+  negative : Bool
+  digits : String
+  exponent : Int
+} derive(Eq, @debug.Debug)
+pub fn NumberKey::equal(Self, Self) -> Bool
+pub fn NumberKey::is_integer(Self) -> Bool
+pub fn NumberKey::not_equal(Self, Self) -> Bool
+pub fn NumberKey::to_repr(Self) -> @debug.Repr
+
+pub enum Value {
+  Null
+  Boolean(Bool)
+  Number(String, NumberKey)
+  String(String)
+  Array(Array[Value])
+  Object(Map[String, Value])
+}
 
 // Type aliases
 

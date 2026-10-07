@@ -1,0 +1,4 @@
+[local/moondiff-json] test src/diff/pointer_test.mbt:25 ("invalid pointer escapes and URI fragments return INVALID_OPTIONS") failed: src/diff/pointer_test.mbt:32:9-32:35@local/moondiff-json FAILED: `Some("x") != None`
+diff:
+-Some("x") +None
+Total tests: 1, passed: 0, failed: 1.

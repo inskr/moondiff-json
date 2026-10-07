@@ -1,9 +1,10 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope for this run: Task 1 only, as explicitly requested by the user.
+Scope: tasks 1 and 2 authorized by the user in sequence.
 
 Task 1: complete.
-Tasks 2–8: pending; not implemented in this run.
+Task 2: complete (base 30f08a6).
+Tasks 3–8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -32,3 +33,17 @@ GREEN observed: MoonBit 7 passed / 0 failed; Node 12 cases and deterministic rep
 Review: current-agent inline scope check; no parallel reviewer per explicit execution constraint. No reduction in precision or core features and no change to final report semantics. Remaining resource limits and final reports are explicitly deferred to their planned tasks, not claimed complete.
 
 Task 1: complete (base 531ff57; implementation commit includes this entry). Validation: scripts/setup-windows.ps1, pinned npm ci, scripts/verify-task1.ps1 → exit 0. Final check/test/build passed without compiler warnings; 7 MoonBit tests passed; 12 Node cases and 12 identical Chrome Worker outputs passed. Logs saved in docs/validation. No public push, deployment, package publication or submission.
+
+Task 2 decisions:
+- Keep shared error/side/limit types in model/base; input owns read-only exact NumberKey and controlled Document; model re-exports the public contract. This avoids circular dependencies without changing the report schema.
+- Convert parsed Json into a Value tree that has no Double. Only parse_document constructs Document; root() copies mutable containers to protect the stored validated tree.
+- Enforce input byte/node/depth and number limits at Document construction now, so it already fulfills its validation invariant; task 5 still owns options JSON and report/change-limit integration.
+- Validate standalone raw numeric syntax, bound explicit exponent accumulation before overflow, and preserve the original token independently of the canonical key.
+- Source inspection confirms builtin String comparison is not Unicode codepoint lexical ordering. Explicit codepoint sorting is required in tasks 3/5; do not reuse probe dumps(sort=true) for final reports.
+- The constructor boundary probe initially expected an unqualified diagnostic type name; actual compiler rejection uses the fully qualified Document name. Corrected only the probe's match; the encapsulation already worked.
+
+Task 2 RED: 7 new primitive cases failed (8 existing/negative cases passed); model phase 6 failed, 16 passed. Full logs will be retained in docs/validation.
+
+Task 2 review: invalid Pointer text was being stored as error.path. Added a regression assertion, observed Some("x") != None, then changed this unknown location to None. A future options parser can attach a known valid configuration Pointer. No error envelope or comparison semantics changed.
+
+Task 2: complete (base 30f08a6; implementation commit includes this entry). scripts/verify-task2.ps1 → exit 0: JS check with deny-warn, 22/22 MoonBit tests, compiler rejection of unchecked external Document construction, release build, 12 Node cases and identical 12 real Chrome Worker outputs. RED and final logs saved in docs/validation. Current-agent inline review completed; no parallel agents or public operations. Next: task 3 object/position comparison and ignore rules with explicit Unicode codepoint ordering.

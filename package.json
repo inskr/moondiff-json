@@ -11,7 +11,8 @@
     "probe:js": "node scripts/probe-js.mjs",
     "probe:serve": "node scripts/probe-serve.mjs",
     "probe:browser": "node scripts/prepare-worker-probe.mjs && node scripts/probe-browser.mjs",
-    "verify:task1": "node scripts/verify-task1.mjs"
+    "verify:task1": "node scripts/verify-task1.mjs",
+    "verify:task2": "node scripts/verify-task2.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.63.0"

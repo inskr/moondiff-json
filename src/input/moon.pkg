@@ -1,3 +1,5 @@
 import {
   "moonbitstack/moonjson",
+  "local/moondiff-json/src/model/base",
+  "moonbitlang/core/encoding/utf8",
 }

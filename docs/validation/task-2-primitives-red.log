@@ -1,0 +1,77 @@
+Warning: [0009]
+   ╭─[ F:\MOONBit\src\input\number.mbt:3:12 ]
+   │
+ 3 │ pub struct NumberKey {
+   │            ────┬────  
+   │                ╰────── Warning (struct_never_constructed): The struct NumberKey is never constructed
+───╯
+Warning: [0079]
+   ╭─[ F:\MOONBit\src\input\number.mbt:7:10 ]
+   │
+ 7 │ } derive(Eq, Debug)
+   │          ─┬  
+   │           ╰── Warning (implicit_impl_as_method): The methods not_equal, equal from `impl Eq for NumberKey` are implicit promoted as regular method for `NumberKey`. This behavior is deprecated and will be removed in the future. Add a `pub extend NumberKey with Eq::{not_equal, equal}` declaration or manually define regular methods for type `NumberKey` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+───╯
+Warning: [0079]
+   ╭─[ F:\MOONBit\src\input\number.mbt:7:14 ]
+   │
+ 7 │ } derive(Eq, Debug)
+   │              ──┬──  
+   │                ╰──── Warning (implicit_impl_as_method): The methods to_repr from `impl @moonbitlang/core/debug.Debug for NumberKey` are implicit promoted as regular method for `NumberKey`. This behavior is deprecated and will be removed in the future. Add a `pub extend NumberKey with @moonbitlang/core/debug.Debug::{to_repr}` declaration or manually define regular methods for type `NumberKey` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+───╯
+Warning: [0079]
+   ╭─[ F:\MOONBit\src\model\base\types.mbt:2:49 ]
+   │
+ 2 │ pub(all) enum Side { Old; New; Options } derive(Eq, Debug)
+   │                                                 ─┬  
+   │                                                  ╰── Warning (implicit_impl_as_method): The methods not_equal, equal from `impl Eq for Side` are implicit promoted as regular method for `Side`. This behavior is deprecated and will be removed in the future. Add a `pub extend Side with Eq::{not_equal, equal}` declaration or manually define regular methods for type `Side` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+───╯
+Warning: [0079]
+   ╭─[ F:\MOONBit\src\model\base\types.mbt:2:53 ]
+   │
+ 2 │ pub(all) enum Side { Old; New; Options } derive(Eq, Debug)
+   │                                                     ──┬──  
+   │                                                       ╰──── Warning (implicit_impl_as_method): The methods to_repr from `impl @moonbitlang/core/debug.Debug for Side` are implicit promoted as regular method for `Side`. This behavior is deprecated and will be removed in the future. Add a `pub extend Side with @moonbitlang/core/debug.Debug::{to_repr}` declaration or manually define regular methods for type `Side` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+───╯
+Warning: [0079]
+    ╭─[ F:\MOONBit\src\model\base\types.mbt:17:10 ]
+    │
+ 17 │ } derive(Eq, Debug)
+    │          ─┬  
+    │           ╰── Warning (implicit_impl_as_method): The methods not_equal, equal from `impl Eq for ErrorCode` are implicit promoted as regular method for `ErrorCode`. This behavior is deprecated and will be removed in the future. Add a `pub extend ErrorCode with Eq::{not_equal, equal}` declaration or manually define regular methods for type `ErrorCode` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+────╯
+Warning: [0079]
+    ╭─[ F:\MOONBit\src\model\base\types.mbt:17:14 ]
+    │
+ 17 │ } derive(Eq, Debug)
+    │              ──┬──  
+    │                ╰──── Warning (implicit_impl_as_method): The methods to_repr from `impl @moonbitlang/core/debug.Debug for ErrorCode` are implicit promoted as regular method for `ErrorCode`. This behavior is deprecated and will be removed in the future. Add a `pub extend ErrorCode with @moonbitlang/core/debug.Debug::{to_repr}` declaration or manually define regular methods for type `ErrorCode` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+────╯
+Warning: [0079]
+    ╭─[ F:\MOONBit\src\model\base\types.mbt:27:10 ]
+    │
+ 27 │ } derive(Debug)
+    │          ──┬──  
+    │            ╰──── Warning (implicit_impl_as_method): The methods to_repr from `impl @moonbitlang/core/debug.Debug for ErrorInfo` are implicit promoted as regular method for `ErrorInfo`. This behavior is deprecated and will be removed in the future. Add a `pub extend ErrorInfo with @moonbitlang/core/debug.Debug::{to_repr}` declaration or manually define regular methods for type `ErrorInfo` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+────╯
+Warning: [0079]
+    ╭─[ F:\MOONBit\src\model\base\types.mbt:30:59 ]
+    │
+ 30 │ pub(all) suberror DiffError { Failure(ErrorInfo) } derive(Debug)
+    │                                                           ──┬──  
+    │                                                             ╰──── Warning (implicit_impl_as_method): The methods to_repr from `impl @moonbitlang/core/debug.Debug for DiffError` are implicit promoted as regular method for `DiffError`. This behavior is deprecated and will be removed in the future. Add a `pub extend DiffError with @moonbitlang/core/debug.Debug::{to_repr}` declaration or manually define regular methods for type `DiffError` instead. If the promotion is not desirable, add `#deprecated` on the `extend` declaration.
+────╯
+[local/moondiff-json] test src/diff/pointer_test.mbt:2 ("pointer roots and empty member names are distinct") failed: src/diff/pointer_test.mbt:3:3-3:42@local/moondiff-json FAILED: `"#" != ""`
+diff:
+-"#" +""
+[local/moondiff-json] test src/diff/pointer_test.mbt:12 ("RFC 6901 escaping is reversible without URI percent decoding") failed: src/diff/pointer_test.mbt:13:3-13:95@local/moondiff-json FAILED: `"#" != "/~0~1/a~1b/~01/中文🌙/%20"`
+diff:
+-"#" +"/~0~1/a~1b/~01/中文🌙/%20"
+[local/moondiff-json] test src/input/number_test.mbt:2 ("canonical decimals preserve exact equality and distinct large integers") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/input/number_test.mbt:20 ("number token length 256 accepted and 257 rejected") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/input/number_test.mbt:29 ("explicit exponent boundary is checked without expansion or overflow") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/input/number_test.mbt:46 ("standalone normalization rejects malformed or non-ASCII tokens") failed: src/input/number_test.mbt:49:30-49:68@local/moondiff-json FAILED: `NumberLimit != ParseError`
+diff:
+-NumberLimit +ParseError
+[local/moondiff-json] test src/input/number_test.mbt:55 ("identity integer classification uses canonical decimal exponent") failed: local/moondiff-json/src/model/base.DiffError.Failure
+Total tests: 15, passed: 8, failed: 7.

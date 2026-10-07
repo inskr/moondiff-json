@@ -1,0 +1,19 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "local/moondiff-json/src/diff"
+
+import {
+  "local/moondiff-json/src/model/base",
+}
+
+// Values
+pub fn pointer_decode(String) -> Array[String] raise @base.DiffError
+
+pub fn pointer_encode(Array[String]) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

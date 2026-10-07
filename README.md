@@ -1,7 +1,8 @@
 # MoonDiff JSON
 
 MoonBit JSON 结构化差异库，计划配套 Node CLI `moondiff-json` 与静态网页，
-用于配置审查、API 回归和测试快照比较。当前仅完成任务 1：严格解析适配和 JS 桥接验证。
+用于配置审查、API 回归和测试快照比较。当前完成任务 1–2：严格解析适配、JS 桥接、
+受控数据模型、精确数字正规化和 RFC 6901 Pointer。
 尚不能执行正式差异比较。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
@@ -28,6 +29,16 @@ MoonBit JSON 结构化差异库，计划配套 Node CLI `moondiff-json` 与静�
 环境、依赖选择、真实结果与当前限制见 [docs/environment.md](docs/environment.md)。
 实施基线见 [docs/spec.md](docs/spec.md)、[docs/plan.md](docs/plan.md)，
 进度见 [docs/progress.md](docs/progress.md)。
+
+## 任务 2 验证
+
+```powershell
+.\scripts\verify-task2.ps1
+```
+
+在上述环境准备后运行，覆盖全部 MoonBit 核心测试、受控 Document 编译边界、
+JS 构建，以及任务 1 的 Node/浏览器 Worker 回归。
+数字、Pointer 和模型说明见 [docs/model-and-primitives.md](docs/model-and-primitives.md)。
 
 项目暂用本地模块名 `local/moondiff-json`，未发布。正式发布需替换为参赛者自己的 namespace。
 项目代码使用 MIT；依赖来源和许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

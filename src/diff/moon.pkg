@@ -1,0 +1,3 @@
+import {
+  "local/moondiff-json/src/model/base",
+}

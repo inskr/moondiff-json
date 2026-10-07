@@ -1,0 +1,64 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "local/moondiff-json/src/model/base"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn default_limits() -> Limits
+
+// Errors
+pub(all) suberror DiffError {
+  Failure(ErrorInfo)
+} derive(@debug.Debug)
+pub fn DiffError::to_repr(Self) -> @debug.Repr
+
+// Types and methods
+pub(all) enum ErrorCode {
+  ParseError
+  DuplicateKey
+  InvalidOptions
+  InvalidArrayKey
+  InputLimit
+  DepthLimit
+  NodeLimit
+  ChangeLimit
+  NumberLimit
+  EncodingError
+  IoError
+} derive(Eq, @debug.Debug)
+pub fn ErrorCode::equal(Self, Self) -> Bool
+pub fn ErrorCode::not_equal(Self, Self) -> Bool
+pub fn ErrorCode::to_repr(Self) -> @debug.Repr
+
+pub(all) struct ErrorInfo {
+  code : ErrorCode
+  message : String
+  side : Side?
+  path : String?
+  line : Int?
+  column : Int?
+} derive(@debug.Debug)
+pub fn ErrorInfo::to_repr(Self) -> @debug.Repr
+
+pub struct Limits {
+  max_input_bytes : Int
+  max_depth : Int
+  max_nodes : Int
+  max_changes : Int
+}
+pub fn Limits::new(max_input_bytes? : Int, max_depth? : Int, max_nodes? : Int, max_changes? : Int) -> Self raise DiffError
+
+pub(all) enum Side {
+  Old
+  New
+  Options
+} derive(Eq, @debug.Debug)
+pub fn Side::equal(Self, Self) -> Bool
+pub fn Side::not_equal(Self, Self) -> Bool
+pub fn Side::to_repr(Self) -> @debug.Repr
+
+// Type aliases
+
+// Traits

@@ -1,6 +1,7 @@
 # 任务 1：环境、解析依赖与 JS 桥接验证
 
 验证日期：2026-10-07（Asia/Shanghai）。本记录仅覆盖任务 1，不是最终软件验收或性能报告。
+其中“尚未完成”描述任务 1 时的状态；任务 2 后续成果见 [model-and-primitives.md](model-and-primitives.md)。
 
 ## 实际环境与版本
 

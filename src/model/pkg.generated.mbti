@@ -1,0 +1,92 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "local/moondiff-json/src/model"
+
+import {
+  "local/moondiff-json/src/input",
+  "local/moondiff-json/src/model/base",
+}
+
+// Values
+pub fn default_limits() -> @base.Limits
+
+pub fn normalize_number(String) -> @input.NumberKey raise @base.DiffError
+
+pub fn parse_document(String, @base.Side, @base.Limits) -> @input.Document raise @base.DiffError
+
+// Errors
+
+// Types and methods
+pub(all) struct ArrayRule {
+  path : Array[String]
+  key : String
+  check_order : Bool
+}
+
+pub(all) struct Change {
+  kind : ChangeKind
+  old_path : String?
+  new_path : String?
+  before : ValueSlot
+  after : ValueSlot
+  identity : Identity?
+}
+
+pub(all) enum ChangeKind {
+  Added
+  Removed
+  Modified
+  Reordered
+}
+
+pub(all) enum DiffReport {
+  Success(Summary, Array[Change])
+  Error(@base.ErrorInfo)
+}
+
+pub(all) struct Identity {
+  array_old_path : String?
+  array_new_path : String?
+  key : String
+  value_json : String
+}
+
+pub(all) struct Options {
+  ignore_paths : Array[Array[String]]
+  array_rules : Array[ArrayRule]
+  limits : @base.Limits
+}
+pub fn Options::default() -> Self
+
+pub(all) struct Summary {
+  added : Int
+  removed : Int
+  modified : Int
+  reordered : Int
+  ignored_subtrees : Int
+}
+
+pub struct ValueSlot {
+  present : Bool
+  json_text : String?
+}
+pub fn ValueSlot::absent() -> Self
+pub fn ValueSlot::present_json(String) -> Self
+
+// Type aliases
+pub using @base {type DiffError}
+
+pub using @input {type Document}
+
+pub using @base {type ErrorCode}
+
+pub using @base {type ErrorInfo}
+
+pub using @base {type Limits}
+
+pub using @input {type NumberKey}
+
+pub using @base {type Side}
+
+pub using @input {type Value}
+
+// Traits

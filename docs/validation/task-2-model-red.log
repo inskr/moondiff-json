@@ -1,0 +1,11 @@
+[local/moondiff-json] test src/model/types_test.mbt:2 ("absent and genuine null slots cannot be confused") failed: src/model/types_test.mbt:5:3-5:63@local/moondiff-json FAILED: `(true, Some("null")) != (false, None)`
+diff:
+-(true, Some("null")) +(false, None)
+[local/moondiff-json] test src/model/types_test.mbt:12 ("Document numeric nodes contain exact keys and preserved source tokens") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/model/types_test.mbt:32 ("Document preserves null booleans empty containers and decoded strings") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/model/types_test.mbt:48 ("Document rejects invalid input and preserves error side") failed: src/model/types_test.mbt:56:9-56:35@local/moondiff-json FAILED: `ParseError != DuplicateKey`
+diff:
+-ParseError +DuplicateKey
+[local/moondiff-json] test src/model/types_test.mbt:64 ("Document snapshots cannot mutate the validated stored tree") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/model/types_test.mbt:89 ("Document respects lower UTF-8 byte node and root-zero depth limits") failed: local/moondiff-json/src/model/base.DiffError.Failure
+Total tests: 22, passed: 16, failed: 6.

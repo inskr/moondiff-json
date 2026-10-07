@@ -1,0 +1,2 @@
+# Preserve actual compiler diagnostic spacing in verification evidence.
+docs/validation/*.log whitespace=-blank-at-eol
