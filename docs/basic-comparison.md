@@ -25,7 +25,8 @@ ignore_paths 存放已解码的 Pointer token。先在两个完整快照上校�
 每侧只取一次 Document 快照，比较及序列化不修改 Document 或 Options。
 忽略发生在输入校验之后，因此被忽略子树中的重复键、数字超限仍然报错。
 收集变化时执行 max_changes，超过上限抛错，不返回部分成功。
-任务 3 对任何非空 array_rules 明确报 INVALID_OPTIONS；任务 4 将接入唯一键匹配。
+任务 3 当时对任何非空 array_rules 明确报 INVALID_OPTIONS；任务 4 已替换此临时限制，
+唯一键匹配语义见 semantics.md。
 
 ## 保存的夹具和验证
 

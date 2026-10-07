@@ -1,11 +1,12 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1–3 authorized by the user in sequence.
+Scope: tasks 1–4 authorized by the user in sequence.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
 Task 3: complete (base 1802b89).
-Tasks 4–8: pending.
+Task 4: complete (base 9cf462a).
+Tasks 5–8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -61,3 +62,16 @@ Task 3 RED: initial test wiring used unqualified re-exported constructors, then 
 Task 3 review: current-agent inline review of scalar/whole-subtree branching, Unicode ordering, dual paths, snapshot immutability, complete ignore prevalidation and bounded collection. No subagents per sequential scope. No precision reduction, feature deletion or report-semantic change; no deferred review findings.
 
 Task 3: complete (base 1802b89; implementation commit includes this entry). scripts/verify-task3.ps1 → exit 0: 15 saved fixtures match executable assertions, JS check with deny-warn, 51/51 MoonBit tests, external Document constructor rejection, release build, 12 Node parsing cases and identical 12 real Chrome module Worker outputs. Logs saved in docs/validation. Final report byte comparisons and performance benchmarks are not claimed. No public operations. Next: task 4 explicit unique-key arrays.
+
+Task 4 decisions:
+- Replace the temporary keyed-array guard with prevalidation and per-side Map indexes. Validate rule duplicates first; then targets and identities, including rules below whole added/removed ancestors.
+- Preserve each original index and propagate the nearest identity through nested object/position-array changes. Common identity labels use the old-side raw token; added identities use the new-side raw token. Reorder sequences use each side's raw identity tokens; equality/sorting use exact canonical keys only.
+- Fix the integer sort representation as N:<+ or ->:<digits>:<exponent>; strings use S:<decoded text>. Codepoint sorting is deterministic, not numeric magnitude ordering.
+- Follow the specification's explicit overlap exception: an ignored array/ancestor skips keyed data checks, including target existence, but duplicate rule configuration is still rejected and Document input validation is never skipped. Task 5 validates JSON option syntax/types before input parsing.
+- Keep whole-array additions/removals in the general branch after prevalidation, and use the shared bounded change collector for all four kinds.
+
+Task 4 RED: 76 total, 25 failed and 51 passed, saved in docs/validation/task4-red.log. Cross-package Identity record construction required an explicit type annotation during compilation; no API or report semantic changes. GREEN: 76/76.
+
+Task 4 review: current-agent inline review of exact typed keys, per-side duplicate rejection, old/new index propagation, common-order projection, absent/whole-array target checks, ignored overlaps, immutable snapshots and deterministic ordering. Index loops use Map operations; no all-pairs scan. No precision reduction or deleted core functionality. User's three untracked supplemental documents remain untouched and outside the implementation commit.
+
+Task 4: complete (base 9cf462a; implementation commit includes this entry). scripts/verify-task4.ps1 → exit 0: 15 basic and 15 keyed saved fixtures verified, JS deny-warn check, 76/76 core tests, standalone 10000-identity reverse test 1/1 (568.1 ms command wall time including test runner, not formal benchmark), external Document construction rejection, JS release build, 12 Node parsing cases and 12 identical real Chrome Worker outputs. Versions/CPU/OS and RED/final logs retained. No public operations. Next: task 5 strict options, resource boundaries and final reports/analyze.

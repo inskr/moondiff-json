@@ -1,0 +1,34 @@
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:2 ("each side rejects missing duplicate and non object identities") failed: src/diff/keyed_helpers_test.mbt:15:7-15:50@local/moondiff-json FAILED: `InvalidOptions != InvalidArrayKey`
+diff:
+-InvalidOptions +InvalidArrayKey
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:19 ("only strings or exact mathematical integers are valid identities") failed: src/diff/keyed_helpers_test.mbt:15:7-15:50@local/moondiff-json FAILED: `InvalidOptions != InvalidArrayKey`
+diff:
+-InvalidOptions +InvalidArrayKey
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:41 ("whole added removed arrays and added ancestors validate identities first") failed: src/diff/keyed_helpers_test.mbt:15:7-15:50@local/moondiff-json FAILED: `InvalidOptions != InvalidArrayKey`
+diff:
+-InvalidOptions +InvalidArrayKey
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:48 ("overlapping ignore skips keyed data validation but preserves config checks") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:63 ("multiple keyed rules use deterministic object order") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:72 ("keyed change limit counts reorder before element changes") failed: src/diff/keyed_validation_test.mbt:77:28-77:67@local/moondiff-json FAILED: `InvalidOptions != ChangeLimit`
+diff:
+-InvalidOptions +ChangeLimit
+[local/moondiff-json] test src/diff/keyed_validation_test.mbt:83 ("unconfigured object arrays stay positional and keyed inputs stay immutable") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_properties_test.mbt:2 ("keyed swap self and repeat preserve paths slots and counts") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_properties_test.mbt:31 ("reverse ten thousand identities uses keyed matching and one reorder") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:4 ("explicit keyed reorder is equal by default") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:16 ("checked reorder reports shared identity sequences") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:38 ("inserting at the front does not reorder common identities") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:52 ("deleting at the front does not reorder common identities") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:66 ("matched field changes retain old zero and new two indices") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:90 ("array reorder precedes sorted identity field changes") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:124 ("string and integer identities remain distinct") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:138 ("numeric identity notation equals but adjacent large integers differ") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:172 ("changing identity removes and adds complete elements") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:206 ("whole keyed array addition remains one change") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:228 ("whole keyed array removal remains one change") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:250 ("rules use decoded escaped paths and empty identity key") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:274 ("new ancestor object is one change after descendant array validation") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:296 ("identity context persists into nested positional arrays") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/keyed_array_test.mbt:318 ("typed identity sort is deterministic rather than numeric magnitude") failed: local/moondiff-json/src/model/base.DiffError.Failure
+[local/moondiff-json] test src/diff/ignore_test.mbt:95 ("explicit root keyed rule accepts empty arrays") failed: local/moondiff-json/src/model/base.DiffError.Failure
+Total tests: 76, passed: 51, failed: 25.

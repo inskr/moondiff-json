@@ -4,21 +4,18 @@ pub fn diff_documents(
   new : @model.Document,
   options : @model.Options,
 ) -> @model.DiffReport raise @base.DiffError {
-  // Task 4 replaces this explicit guard; never silently use positional matching.
-  if !options.array_rules.is_empty() {
-    raise invalid_options(
-      "Keyed arrays are not enabled until task 4", "/array_rules",
-    )
-  }
   let left = old.root()
   let right = new.root()
   let ignores = prepare_ignores(options.ignore_paths, left, right)
+  let keyed = prepare_keyed(options.array_rules, left, right, ignores)
   let state = {
     changes: [],
+    keyed,
     max_changes: options.limits.max_changes,
     added: 0,
     removed: 0,
     modified: 0,
+    reordered: 0,
     ignored: 0,
   }
   compare_values(Some(left), Some(right), "", "", Some(ignores), state)
@@ -27,7 +24,7 @@ pub fn diff_documents(
       added: state.added,
       removed: state.removed,
       modified: state.modified,
-      reordered: 0,
+      reordered: state.reordered,
       ignored_subtrees: state.ignored,
     },
     state.changes,
@@ -37,10 +34,12 @@ pub fn diff_documents(
 ///|
 priv struct DiffState {
   changes : Array[@model.Change]
+  keyed : Map[String, KeyedArray]
   max_changes : Int
   mut added : Int
   mut removed : Int
   mut modified : Int
+  mut reordered : Int
   mut ignored : Int
 }
 
@@ -61,6 +60,33 @@ fn add_change(
   old_path : String,
   new_path : String,
   state : DiffState,
+  identity? : @model.Identity? = None,
+) -> Unit raise @base.DiffError {
+  push_change(
+    {
+      kind,
+      old_path: if old is None {
+        None
+      } else {
+        Some(old_path)
+      },
+      new_path: if new is None {
+        None
+      } else {
+        Some(new_path)
+      },
+      before: slot(old),
+      after: slot(new),
+      identity,
+    },
+    state,
+  )
+}
+
+///|
+fn push_change(
+  change : @model.Change,
+  state : DiffState,
 ) -> Unit raise @base.DiffError {
   if state.changes.length() >= state.max_changes {
     raise @base.Failure({
@@ -72,27 +98,12 @@ fn add_change(
       column: None,
     })
   }
-  state.changes.push({
-    kind,
-    old_path: if old is None {
-      None
-    } else {
-      Some(old_path)
-    },
-    new_path: if new is None {
-      None
-    } else {
-      Some(new_path)
-    },
-    before: slot(old),
-    after: slot(new),
-    identity: None,
-  })
-  match kind {
+  state.changes.push(change)
+  match change.kind {
     Added => state.added += 1
     Removed => state.removed += 1
     Modified => state.modified += 1
-    Reordered => abort("Invariant: basic diff cannot reorder")
+    Reordered => state.reordered += 1
   }
 }
 
@@ -104,6 +115,7 @@ fn compare_values(
   new_path : String,
   ignores : IgnoreNode?,
   state : DiffState,
+  identity? : @model.Identity? = None,
 ) -> Unit raise @base.DiffError {
   if ignores is Some({ terminal: true, .. }) {
     state.ignored += 1
@@ -111,8 +123,10 @@ fn compare_values(
   }
   match (old, new) {
     (None, None) => ()
-    (None, Some(_)) => add_change(Added, old, new, old_path, new_path, state)
-    (Some(_), None) => add_change(Removed, old, new, old_path, new_path, state)
+    (None, Some(_)) =>
+      add_change(Added, old, new, old_path, new_path, state, identity~)
+    (Some(_), None) =>
+      add_change(Removed, old, new, old_path, new_path, state, identity~)
     (Some(Object(left)), Some(Object(right))) => {
       let keys = left.keys().to_array()
       for key, _ in right {
@@ -134,10 +148,15 @@ fn compare_values(
           new_path + suffix,
           child_ignore,
           state,
+          identity~,
         )
       }
     }
     (Some(Array(left)), Some(Array(right))) => {
+      if state.keyed.get(old_path) is Some(keyed) {
+        compare_keyed(keyed, old_path, new_path, state)
+        return
+      }
       let length = if left.length() > right.length() {
         left.length()
       } else {
@@ -147,13 +166,21 @@ fn compare_values(
         let a = if i < left.length() { Some(left[i]) } else { None }
         let b = if i < right.length() { Some(right[i]) } else { None }
         let suffix = "/" + i.to_string()
-        compare_values(a, b, old_path + suffix, new_path + suffix, None, state)
+        compare_values(
+          a,
+          b,
+          old_path + suffix,
+          new_path + suffix,
+          None,
+          state,
+          identity~,
+        )
       }
     }
     (Some(Null), Some(Null)) => ()
     (Some(Boolean(a)), Some(Boolean(b))) if a == b => ()
     (Some(String(a)), Some(String(b))) if a == b => ()
     (Some(Number(_, a)), Some(Number(_, b))) if a == b => ()
-    _ => add_change(Modified, old, new, old_path, new_path, state)
+    _ => add_change(Modified, old, new, old_path, new_path, state, identity~)
   }
 }

@@ -1,9 +1,9 @@
 # MoonDiff JSON
 
 MoonBit JSON 结构化差异库，计划配套 Node CLI `moondiff-json` 与静态网页，
-用于配置审查、API 回归和测试快照比较。当前完成任务 1–3：严格解析适配、JS 桥接、
-受控数据模型、精确数字正规化、RFC 6901 Pointer、基础结构比较和忽略规则。
-MoonBit 内部接口已能比较对象、标量和位置数组；唯一键数组、正式字符串报告入口、CLI 和网页仍待后续任务。
+用于配置审查、API 回归和测试快照比较。当前完成任务 1–4：严格解析适配、JS 桥接、
+受控数据模型、精确数字正规化、RFC 6901 Pointer、基础结构比较、忽略和唯一键数组。
+MoonBit 内部接口已能比较对象、标量、位置数组和显式身份数组；正式字符串报告入口、CLI 和网页仍待后续任务。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
 主要比较 MoonBit 源码。本项目针对 JSON 数据结构，不宣称生态首创。
@@ -50,6 +50,17 @@ JS 构建，以及任务 1 的 Node/浏览器 Worker 回归。
 51 项 MoonBit 测试及 JS check/build，并复跑 Node/Chrome Worker 解析桥接。
 用法和阶段边界见 [docs/basic-comparison.md](docs/basic-comparison.md)。
 正式报告的字节契约由任务 5 实现，三端差异报告一致性由后续客户端任务验收。
+
+## 任务 4 验证
+
+```powershell
+.\scripts\verify-task4.ps1
+```
+
+验证 15 个唯一键夹具、身份错误与资源边界，以及全部 76 项核心测试。
+10000 身份反序用例默认报告零变化，开启顺序检查报告一条 reordered。
+完整 JS 检查、构建和 Node/Chrome Worker 解析桥接回归一并执行。
+比较策略和身份排序见 [docs/semantics.md](docs/semantics.md)。
 
 项目暂用本地模块名 `local/moondiff-json`，未发布。正式发布需替换为参赛者自己的 namespace。
 项目代码使用 MIT；依赖来源和许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

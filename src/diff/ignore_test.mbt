@@ -92,12 +92,14 @@ test "escaped ignore tokens match literal empty and slash keys" {
 }
 
 ///|
-test "unsupported keyed arrays never silently fall back to position" {
+test "explicit root keyed rule accepts empty arrays" {
   let options = {
     ..@model.Options::default(),
     array_rules: [{ path: [], key: "id", check_order: false, }],
   }
-  assert_option_error("[]", "[]", options)
+  let (summary, changes) = basic_result("[]", "[]", options)
+  assert_eq(summary_counts(summary), (0, 0, 0, 0, 0))
+  assert_eq(changes.length(), 0)
 }
 
 ///|
