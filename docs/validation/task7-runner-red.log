@@ -1,0 +1,29 @@
+FAIL original strings reach the worker; only current ID is accepted: Core should preload in one worker
+
+0 !== 1
+
+FAIL superseded worker cannot publish even with the current ID: Core should preload in one worker
+
+0 !== 1
+
+FAIL cancel terminates work, rejects late callbacks and rebuilds on next run: Core should preload in one worker
+
+0 !== 1
+
+FAIL timeout terminates work and does not manufacture a core report: Core should preload in one worker
+
+0 !== 1
+
+FAIL worker failure stays a visible runtime error and permits recovery: Core should preload in one worker
+
+0 !== 1
+
+FAIL idle worker is reused for offline comparisons and stale error callbacks are ignored: Core should preload in one worker
+
+0 !== 1
+
+FAIL closing the page invalidates work and closes its worker: Core should preload in one worker
+
+0 !== 1
+
+Worker runner: 0/7 passed, 7 failed (v22.23.3).

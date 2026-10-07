@@ -1,6 +1,6 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1–6 authorized by the user in sequence.
+Scope: tasks 1–7 authorized by the user in sequence.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
@@ -8,7 +8,8 @@ Task 3: complete (base 1802b89).
 Task 4: complete (base 9cf462a).
 Task 5: complete (base 2621e4d).
 Task 6: complete (base df9d62a).
-Tasks 7–8: pending.
+Task 7: complete (base b98131d).
+Task 8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -104,3 +105,17 @@ Task 6 review: current-agent inline check of strict file decoding, BOM preservat
 README verification: the committed examples/config files produced one timeout change and one ignored subtree in text and JSON, both with the expected exit 1; actual output saved in task6-readme-demo.log. npm run cli:smoke also executed successfully with 49/49 process tests after package script registration.
 
 Task 6: complete (base df9d62a; implementation commit includes this entry). scripts/verify-task6.ps1 → exit 0: 101/101 MoonBit tests, deny-warn JS check, release build, controlled Document boundary rejection, legacy 12 Node/real Chrome Worker parsing cases, 49/49 CLI smoke tests, 15 complete success/error JSON and text reports byte-identical across direct bridge, CLI and actual Chrome 154.0.8037.98 module Worker. Windows 11 x64 10.0.22631, i7-12700H, Node 22.23.3, moon 0.1.20260920, moonc/core 0.10.14+7d59c7ec9; real RED/GREEN/final logs saved under docs/validation/task6-*.log. Linux remains untested and no formal performance result is claimed. Next: task 7 static product website with Worker timeout/cancel/stale-result handling.
+
+Task 7 decisions:
+- Use native HTML/CSS/ES modules and a preloaded module Worker importing the same stable dist facade. Main-thread JS handles file IO, lifecycle, DOM and downloads; only returned report envelopes are parsed. Options and user documents remain raw strings.
+- Ruling: Display at most 100 changes per page with an explicit range while retaining the exact full report for download and all summary counters. Cost: pagination controls; there is no core limit reduction, hidden truncation or report-semantic change.
+- Runtime WORKER_TIMEOUT/WORKER_ERROR remain visible client failures, without fabricated core JSON. Input/option/IO/encoding failures use the same MoonBit report. Cancellation/new comparison/draft edits invalidate request IDs; active workers terminate and next comparison rebuilds them. Idle workers stay loaded for offline comparison.
+- Each file read has a side-specific token. Edits/new files/examples invalidate late reads; pending imports block comparison, and failed UTF-8 files stay errors until corrected. Preserve exactly one removable BOM and original numeric tokens by fatal decoding with ignoreBOM=true.
+- Use a localhost-only explicit static asset allowlist, GET/HEAD only, relative module paths, and no runtime CDN/upload/storage/telemetry. Keep the approved non-PWA offline scope; terminated workers rebuild from the local service.
+- Adapt the Playwright skill's Bash CLI-first workflow to the existing pinned playwright-core driver and the plan's executable browser smoke script on Windows. Real Chrome is used; no extra browser or CLI installation, no @playwright/test, no product test hooks. User-supplied sequential execution and approved plan remain binding.
+
+Task 7 RED: Worker state stub 0/7; server stub 404 instead of 200; real-page first fixture 0/1; full page stub 1/34 with 33 behavior failures. The initially passing file-race test did not prove a read began, so added a pending-read/disabled-compare assertion and observed 0/1 RED. One test-call parenthesis error was corrected before claiming runnable browser RED. Logs preserve actual failing and passing runs.
+
+Task 7 review: current-agent inline review of raw strings, worker/request guards, actual terminate/recovery, timer cancellation, file-read ownership, dirty-report invalidation, original report download bytes, absent/null/numeric display, raw options context, text-node rendering, bounded view pagination and static allowlist. Actual 1440px desktop and 390px narrow screenshots inspected; no layout or horizontal-overflow issue. No subagents/public operations/precision reduction/core deletions. Three user supplemental files remain untouched and outside the commit. No pending review findings.
+
+Task 7: complete (base b98131d; implementation commit includes this entry). scripts/verify-task7.ps1 → exit 0: JS deny-warn check, release build, 101/101 core tests, Document boundary rejection, legacy 12 Node/Worker parsing cases, 49/49 CLI smoke, 7/7 Worker state tests, read-only static-server smoke, 34/34 actual product-page Chrome smoke. 15 downloaded reports match direct bridge/CLI exact bytes; three demos work under browser network offline. Actual 5-second controlled stall timed out at 5048.4202 ms and recovered; this is a client protection test, not a performance benchmark. 284 localhost GET requests, zero remote/upload requests in product-page smoke. Environment: Windows 11 x64 10.0.22631, i7-12700H, Node 22.23.3, Chrome 154.0.8037.98, moon 0.1.20260920, moonc/core 0.10.14+7d59c7ec9. RED/final logs and raw browser results preserved under docs/validation; reproducible visual artifacts under ignored output/playwright. Task 7 functional scope frozen; Linux untested. Next: task 8 genuine benchmarks, CI, clean rebuild and hackathon materials.

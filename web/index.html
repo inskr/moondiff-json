@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoonDiff JSON · 结构化差异</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="data:,">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main>
+    <header><span class="moon-mark" aria-hidden="true"></span><div><p class="eyebrow">MOONBIT / JSON DIFF</p><h1>MoonDiff JSON</h1><p>看清配置与 API 的结构变化，保留每一位数字。</p></div><span id="engine" data-ready="false">核心载入中</span></header>
+    <section class="examples" aria-label="演示案例"><span>载入示例</span><button type="button" data-example="config">配置审查</button><button type="button" data-example="api">API 用户数组</button><button type="button" data-example="precision">精确大整数</button><button type="button" data-example="identity-error">重复身份错误</button></section>
+    <div class="editors">
+      <section class="editor"><div class="editor-heading"><label for="old-text"><span class="side-label">OLD</span>旧文档</label><label class="file-button">导入文件<input id="old-file" type="file" accept=".json,application/json"></label></div><textarea id="old-text" spellcheck="false" aria-describedby="old-file-note" placeholder="粘贴旧 JSON；根节点可为任意值"></textarea><p class="file-note" id="old-file-note">UTF-8 · 原始文本</p></section>
+      <section class="editor"><div class="editor-heading"><label for="new-text"><span class="side-label">NEW</span>新文档</label><label class="file-button">导入文件<input id="new-file" type="file" accept=".json,application/json"></label></div><textarea id="new-text" spellcheck="false" aria-describedby="new-file-note" placeholder="粘贴新 JSON；大整数无需改写"></textarea><p class="file-note" id="new-file-note">UTF-8 · 原始文本</p></section>
+    </div>
+    <section class="options-panel"><div class="editor-heading"><label for="options-text">比较选项 <span class="muted">严格 JSON</span></label><label class="file-button">导入选项<input id="options-file" type="file" accept=".json,application/json"></label></div><textarea id="options-text" spellcheck="false" aria-describedby="policy-help options-file-note">{}</textarea><p class="file-note" id="options-file-note">未配置的字段使用默认值</p><p id="policy-help">数组默认按位置。显式配置 array_rules 后按唯一身份匹配；未开启 check_order 时忽略共有身份的顺序。ignore_paths 跳过比较子树。“相等”表示指定策略下相等。</p></section>
+    <div class="actions"><button id="compare" class="primary" type="button">比较 JSON</button><button id="cancel" type="button" disabled>取消</button><p id="status" data-state="ready" role="status" aria-live="polite">等待输入</p></div>
+    <section id="error-panel" class="error-panel" role="alert" hidden><h2 id="error-title"></h2><pre id="error-detail"></pre></section>
+    <section id="results" hidden aria-labelledby="result-title"><div class="result-heading"><div><p class="eyebrow">STRUCTURAL REPORT</p><h2 id="result-title">比较结果</h2></div><button id="download" type="button" disabled>下载 JSON 报告</button></div><div class="summary"><div><span>新增 added</span><strong id="count-added">0</strong></div><div><span>删除 removed</span><strong id="count-removed">0</strong></div><div><span>修改 modified</span><strong id="count-modified">0</strong></div><div><span>重排 reordered</span><strong id="count-reordered">0</strong></div></div><p id="ignored-note"></p><details class="applied"><summary>本次比较选项</summary><pre id="applied-options"></pre></details><div class="filter-row"><label for="filter-kind">显示变化 <select id="filter-kind"><option value="all">全部</option><option value="added">新增</option><option value="removed">删除</option><option value="modified">修改</option><option value="reordered">重排</option></select></label><span id="visible-count"></span></div><ol id="changes"></ol><p id="empty-result" hidden>没有符合筛选条件的变化。</p><nav id="pagination" aria-label="结果分页"><button id="previous" type="button">上一页</button><span id="page-label"></span><button id="next" type="button">下一页</button></nav></section>
+    <footer><span>本地比较 · 无上传 · MoonBit 核心</span><span>每侧默认 2 MiB / 100000 节点 / 深度 64 · 最多 10000 条变化</span></footer>
+  </main>
+</body>
+</html>

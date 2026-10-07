@@ -17,7 +17,10 @@
     "verify:task1": "node scripts/verify-task1.mjs",
     "verify:task2": "node scripts/verify-task2.mjs",
     "cli:smoke": "node scripts/cli-smoke.mjs",
-    "verify:task6": "node scripts/verify-task6.mjs"
+    "verify:task6": "node scripts/verify-task6.mjs",
+    "serve": "node scripts/serve.mjs",
+    "web:smoke": "node scripts/web-smoke.mjs",
+    "verify:task7": "node scripts/verify-task7.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.63.0"

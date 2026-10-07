@@ -1,10 +1,10 @@
 # MoonDiff JSON
 
-MoonBit JSON 结构化差异库，配套 Node CLI `moondiff-json`，静态网页正在计划中，
-用于配置审查、API 回归和测试快照比较。当前完成任务 1–6，核心和 CLI 可用：
+MoonBit JSON 结构化差异库，配套 Node CLI `moondiff-json` 与静态网页，
+用于配置审查、API 回归和测试快照比较。当前完成任务 1–7，核心、CLI 和网页可用：
 严格解析、精确数字、对象／位置数组／唯一键数组比较、忽略规则和确定性 JSON／文字报告。
 共享 JS 字符串入口 `analyze` 已通过 Node 和真实浏览器 Worker 验证。
-产品网页和正式性能基准仍待任务 7–8。
+正式性能基准、CI、干净构建验收和最终参赛材料仍待任务 8。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
 主要比较 MoonBit 源码。本项目针对 JSON 数据结构，不宣称生态首创。
@@ -64,6 +64,49 @@ Chrome 154.0.8037.98 Worker 间逐字节一致。
 环境为 Windows 11 x64、Node 22.23.3；**Linux 尚未测试**。
 原始记录见 [docs/validation/task6-final.log](docs/validation/task6-final.log)。
 当前 package 保持 private，仅注册 bin 名称，未发布到 npm。
+
+## 静态网页（任务 7）
+
+在完成环境准备后，在项目根目录运行：
+
+```powershell
+.\scripts\moon.ps1 version --all
+& node.exe scripts/build-js.mjs
+& node.exe scripts/serve.mjs
+```
+
+浏览器打开终端打印的 `http://127.0.0.1:<端口>/web/`；默认由系统选择端口。
+也可运行 `npm run serve`，或通过 `npm run serve -- --port 8080` 指定端口。
+按 Ctrl+C 停止服务。网页使用模块 Worker，需要 HTTP 服务。
+静态部署所需文件为完整 `web/` 和两个 `dist/*.mjs`，保持目录相对位置；目前仅本地准备，未部署。
+
+页面支持旧／新 JSON、options 输入与 UTF-8 文件导入，显式比较、取消、示例载入、
+四类计数、双侧路径、身份上下文、保真片段、筛选、分页和完整 JSON 下载。
+每页最多显示 100 条并标明范围；筛选和分页不改变统计或下载报告。
+输入修改后旧报告失效；非法 UTF-8 文件保持错误状态，直到替换或重新编辑该侧。
+`present` 与原始 `json_text` 区分缺失、真实 null 和大整数；用户值通过文本节点显示。
+
+比较及报告由相同 MoonBit analyze 完成。Worker 请求带递增 ID；新比较、输入修改、取消或
+5 秒超时会使旧请求失效，必要时终止 Worker，下一次比较重建。
+WORKER_TIMEOUT／WORKER_ERROR 是页面运行错误，不伪造核心报告；核心输入错误可下载固定错误 envelope。
+载入页面并等待“核心就绪”后可离线比较、下载；取消或超时后的 Worker 重建从本地服务读取资源。
+刷新离线加载不属于 v1 范围。服务仅绑定 localhost，提供静态资源，没有上传端点、CDN 或遥测。
+
+完整验收和独立网页烟测：
+
+```powershell
+.\scripts\verify-task7.ps1
+# 已构建且工具路径就绪后，也可 npm run web:smoke
+& node.exe scripts/web-smoke.mjs
+```
+
+2026-10-07 实测：101/101 核心、49/49 CLI、7/7 Worker 状态、34/34 真实 Chrome 网页用例通过。
+15 项网页下载报告与 bridge、CLI 逐字节一致；实际验证取消、旧结果、5 秒超时、恢复、
+文件读取竞态、非法 UTF-8、中文长值、390px 窄屏和浏览器断网后的三个演示。
+网络记录只有本地静态 GET，无上传或外部请求。
+Windows 11 x64、Node 22.23.3、Chrome 154.0.8037.98；Linux 尚未测试。
+见 [完整日志](docs/validation/task7-final.log)、[原始浏览器记录](docs/validation/task7-browser-result.json)
+和 [演示步骤](docs/demo.md)。本阶段功能范围已冻结；未将超时保护测试当作正式性能基准。
 
 ## 任务 1 复现（Windows x64）
 
