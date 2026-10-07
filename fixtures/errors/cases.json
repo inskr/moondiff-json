@@ -1,0 +1,10 @@
+[
+  {"name":"unknown options precede invalid documents","old":"invalid","new":"invalid","options":"{\"unexpected\":true}","code":"INVALID_OPTIONS","side":"options","path":"/unexpected"},
+  {"name":"duplicate option property","old":"0","new":"0","options":"{\"limits\":{},\"limits\":{}}","code":"DUPLICATE_KEY","side":"options","position":true},
+  {"name":"duplicate decoded object keys","old":"{\"a\":1,\"\\u0061\":2}","new":"{}","options":"{}","code":"DUPLICATE_KEY","side":"old","position":true},
+  {"name":"strict trailing input","old":"0","new":"0 trailing","options":"{}","code":"PARSE_ERROR","side":"new","position":true},
+  {"name":"explicit numeric exponent overflow","old":"0","new":"1e10001","options":"{}","code":"NUMBER_LIMIT","side":"new","path":null},
+  {"name":"fractional identity","old":"[]","new":"[{\"id\":0.1}]","options":"{\"array_rules\":[{\"path\":\"\",\"key\":\"id\"}]}","code":"INVALID_ARRAY_KEY","side":"new","path":"/0/id"},
+  {"name":"array ignore traversal","old":"{\"a\":[1]}","new":"{}","options":"{\"ignore_paths\":[\"/a/0\"]}","code":"INVALID_OPTIONS","side":"options","path":"/ignore_paths/0"},
+  {"name":"bounded complete report","old":"[0,0]","new":"[1,1]","options":"{\"limits\":{\"max_changes\":1}}","code":"CHANGE_LIMIT","side":null,"path":null}
+]

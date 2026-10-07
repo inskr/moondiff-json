@@ -2,6 +2,10 @@
 package "local/moondiff-json/src/bridge"
 
 // Values
+pub fn analyze(String, String, String) -> String
+
+pub fn format_text(String) -> String
+
 pub fn probe_document(String) -> String
 
 // Errors

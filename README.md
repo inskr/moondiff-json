@@ -1,9 +1,10 @@
 # MoonDiff JSON
 
 MoonBit JSON 结构化差异库，计划配套 Node CLI `moondiff-json` 与静态网页，
-用于配置审查、API 回归和测试快照比较。当前完成任务 1–4：严格解析适配、JS 桥接、
-受控数据模型、精确数字正规化、RFC 6901 Pointer、基础结构比较、忽略和唯一键数组。
-MoonBit 内部接口已能比较对象、标量、位置数组和显式身份数组；正式字符串报告入口、CLI 和网页仍待后续任务。
+用于配置审查、API 回归和测试快照比较。当前完成任务 1–5，核心 MVP 可用：
+严格解析、精确数字、对象／位置数组／唯一键数组比较、忽略规则和确定性 JSON／文字报告。
+共享 JS 字符串入口 `analyze` 已通过 Node 和真实浏览器 Worker 验证。
+CLI、产品网页和正式性能基准仍待任务 6–8。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
 主要比较 MoonBit 源码。本项目针对 JSON 数据结构，不宣称生态首创。
@@ -47,7 +48,7 @@ JS 构建，以及任务 1 的 Node/浏览器 Worker 回归。
 ```
 
 覆盖 15 个保存的基础夹具、忽略校验、对称性、确定性和不修改输入，运行全部
-51 项 MoonBit 测试及 JS check/build，并复跑 Node/Chrome Worker 解析桥接。
+MoonBit 测试及 JS check/build，并复跑 Node/Chrome Worker 解析桥接；任务 3 完成时为 51 项核心测试。
 用法和阶段边界见 [docs/basic-comparison.md](docs/basic-comparison.md)。
 正式报告的字节契约由任务 5 实现，三端差异报告一致性由后续客户端任务验收。
 
@@ -57,10 +58,36 @@ JS 构建，以及任务 1 的 Node/浏览器 Worker 回归。
 .\scripts\verify-task4.ps1
 ```
 
-验证 15 个唯一键夹具、身份错误与资源边界，以及全部 76 项核心测试。
+验证 15 个唯一键夹具、身份错误与资源边界，以及全部核心测试；任务 4 完成时为 76 项。
 10000 身份反序用例默认报告零变化，开启顺序检查报告一条 reordered。
 完整 JS 检查、构建和 Node/Chrome Worker 解析桥接回归一并执行。
 比较策略和身份排序见 [docs/semantics.md](docs/semantics.md)。
+
+## 核心 MVP（任务 5）
+
+```powershell
+.\scripts\verify-task5.ps1
+```
+
+构建生成 `dist/moondiff-json.mjs` 和其依赖 `dist/moondiff-json-core.mjs`，两者必须同时保留。
+Node 22 或浏览器模块 Worker 可使用相同接口：
+
+```javascript
+import { analyze, format_text } from './dist/moondiff-json.mjs';
+
+const report = analyze('9007199254740992', '9007199254740993', '{}');
+console.log(report);            // 完整 JSON 报告字符串
+console.log(format_text(report));
+```
+
+传入原始文档字符串；不要先用 JS JSON.parse 解析文档。
+省略第三参数时默认 `{}`；输入或配置错误由 analyze 返回固定错误 envelope。
+format_text 对损坏报告抛 `MoonDiffFormatError`，其 report_text 是 MoonBit 生成的错误报告。
+严格选项、资源上限与报告契约见 [docs/reports-and-options.md](docs/reports-and-options.md)。
+
+实测：98/98 核心测试、7 个完整报告黄金夹具、8 个错误案例通过；
+Node 和真实 Chrome Worker 的 15 项完整报告及文字输出逐字节相同。
+包含三组演示：配置审查、API 用户数组、精确大整数及重复身份错误。
 
 项目暂用本地模块名 `local/moondiff-json`，未发布。正式发布需替换为参赛者自己的 namespace。
 项目代码使用 MIT；依赖来源和许可证见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。

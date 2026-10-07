@@ -6,8 +6,14 @@ const routes = new Map([
   ['/', ['../work/probes/worker-probe.html', 'text/html; charset=utf-8']],
   ['/worker-probe.mjs', ['../work/probes/worker-probe.mjs', 'text/javascript; charset=utf-8']],
   ['/dist/moondiff-json.mjs', ['../dist/moondiff-json.mjs', 'text/javascript; charset=utf-8']],
+  ['/dist/moondiff-json-core.mjs', ['../dist/moondiff-json-core.mjs', 'text/javascript; charset=utf-8']],
   ['/scripts/probe-cases.mjs', ['./probe-cases.mjs', 'text/javascript; charset=utf-8']],
   ['/node-results.json', ['../work/probes/node-results.json', 'application/json']],
+  ['/analyze.html', ['../work/probes/analyze.html', 'text/html; charset=utf-8']],
+  ['/analyze-worker.mjs', ['../work/probes/analyze-worker.mjs', 'text/javascript; charset=utf-8']],
+  ['/analyze-cases.json', ['../work/probes/analyze-cases.json', 'application/json']],
+  ['/analyze-results.json', ['../work/probes/analyze-results.json', 'application/json']],
+  ['/analyze-text-results.json', ['../work/probes/analyze-text-results.json', 'application/json']],
 ]);
 const server = http.createServer(async (req, res) => {
   const route = routes.get(new URL(req.url, 'http://localhost').pathname);

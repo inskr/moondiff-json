@@ -13,6 +13,8 @@ pub fn normalize_number(String) -> @input.NumberKey raise @base.DiffError
 
 pub fn parse_document(String, @base.Side, @base.Limits) -> @input.Document raise @base.DiffError
 
+pub fn parse_options(String) -> Options raise @base.DiffError
+
 // Errors
 
 // Types and methods

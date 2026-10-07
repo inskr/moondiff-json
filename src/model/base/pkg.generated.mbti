@@ -6,7 +6,13 @@ import {
 }
 
 // Values
+pub fn codepoint_compare(String, String) -> Int
+
 pub fn default_limits() -> Limits
+
+pub fn pointer_decode(String) -> Array[String] raise DiffError
+
+pub fn pointer_encode(Array[String]) -> String
 
 // Errors
 pub(all) suberror DiffError {

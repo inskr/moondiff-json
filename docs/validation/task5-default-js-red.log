@@ -1,0 +1,11 @@
+file:///F:/MOONBit/dist/moondiff-json.mjs:6597
+  if (_M0FPC28encoding4utf814encode_2einner(new _M0TPC16string10StringView(text, 0, text.length), false).length > limits.max_input_bytes) {
+                                                                                         ^
+
+TypeError: Cannot read properties of undefined (reading 'length')
+    at _M0FP45local15moondiff_2djson3src5input15parse__document (file:///F:/MOONBit/dist/moondiff-json.mjs:6597:90)
+    at _M0FP45local15moondiff_2djson3src5model14parse__options (file:///F:/MOONBit/dist/moondiff-json.mjs:6826:17)
+    at Module._M0FP45local15moondiff_2djson3src6bridge7analyze (file:///F:/MOONBit/dist/moondiff-json.mjs:9277:21)
+    at file:///F:/MOONBit/scripts/probe-analyze.mjs:10:19
+
+Node.js v22.23.3

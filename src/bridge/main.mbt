@@ -33,3 +33,40 @@ pub fn probe_document(text : String) -> String {
     }
   }
 }
+
+///|
+#export_name("analyze")
+pub fn analyze(
+  old_text : String,
+  new_text : String,
+  options_text : String,
+) -> String {
+  let report = try {
+    let options = @model.parse_options(options_text)
+    let old = @input.parse_document(old_text, @base.Old, options.limits)
+    let new = @input.parse_document(new_text, @base.New, options.limits)
+    @diff.diff_documents(old, new, options)
+  } catch {
+    @base.Failure(info) => @model.Error(info)
+  }
+  @report.render_json(report)
+}
+
+///|
+#export_name("format_text")
+pub fn format_text(text : String) -> String {
+  @report.format_text(text) catch {
+    @base.Failure(info) =>
+      throw_format_error(@report.render_json(@model.Error(info)))
+  }
+}
+
+///|
+/// Only JS exception transport; all validation and report bytes stay in MoonBit.
+extern "js" fn throw_format_error(report_text : String) -> String =
+  #| function(reportText) {
+  #|   const error = new Error(reportText);
+  #|   error.name = "MoonDiffFormatError";
+  #|   error.report_text = reportText;
+  #|   throw error;
+  #| }

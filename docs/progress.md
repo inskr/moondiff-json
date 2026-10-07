@@ -1,12 +1,13 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1–4 authorized by the user in sequence.
+Scope: tasks 1–5 authorized by the user in sequence.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
 Task 3: complete (base 1802b89).
 Task 4: complete (base 9cf462a).
-Tasks 5–8: pending.
+Task 5: complete (base 2621e4d).
+Tasks 6–8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -75,3 +76,16 @@ Task 4 RED: 76 total, 25 failed and 51 passed, saved in docs/validation/task4-re
 Task 4 review: current-agent inline review of exact typed keys, per-side duplicate rejection, old/new index propagation, common-order projection, absent/whole-array target checks, ignored overlaps, immutable snapshots and deterministic ordering. Index loops use Map operations; no all-pairs scan. No precision reduction or deleted core functionality. User's three untracked supplemental documents remain untouched and outside the implementation commit.
 
 Task 4: complete (base 9cf462a; implementation commit includes this entry). scripts/verify-task4.ps1 → exit 0: 15 basic and 15 keyed saved fixtures verified, JS deny-warn check, 76/76 core tests, standalone 10000-identity reverse test 1/1 (568.1 ms command wall time including test runner, not formal benchmark), external Document construction rejection, JS release build, 12 Node parsing cases and 12 identical real Chrome Worker outputs. Versions/CPU/OS and RED/final logs retained. No public operations. Next: task 5 strict options, resource boundaries and final reports/analyze.
+
+Task 5 decisions:
+- Move reusable Pointer and codepoint order into model/base while preserving diff/report public facades, so model can parse options without circular dependencies. Parse options through controlled Document at default limits, then apply lower limits to old/new.
+- Use NumberKey bounded integer conversion for limits and report counters; never use a float or an overflowing parse to decide valid integral values. Strictly reject unknown fields, bad types, missing rule properties, malformed/root ignores and duplicate decoded rule paths.
+- Render fixed success/error JSON envelopes and text in MoonBit. Text report decoding validates counts, paths, slot consistency and JSON fragments. Document byte/node limits do not incorrectly constrain report envelope metadata; 10000-change reports remain readable.
+- Ruling: The actual JS backend exposes raising exports as internal result objects. Keep report.format_text raising DiffError internally, but bridge catches expected failures and uses an exception-only JS FFI carrying MoonBit error report bytes. Actual Node success-string and exception assertions confirm the external protocol. Cost if the backend changes: replace a small transport adapter; comparison/report semantics are unchanged.
+- Ruling: Actual compilation rejects #export_name on optional-argument functions. Keep the three-string MoonBit analyze export and add a tiny JS facade supplying {} only when options is omitted. Build copies discovered compiler output to moondiff-json-core.mjs and the facade to the stable moondiff-json.mjs; Node and Worker share both. Cost: two distribution files instead of one; downstream packaging must include both. No schema/precision/core-feature adjustment.
+
+Task 5 RED: 96 total, 20 failed/76 passed. Actual dependency-signature compile error was corrected to the already verified parse_input adapter, without claiming compilation success prematurely. Review regression: invalid embedded json_text accepted by formatter; watched 1 failed/97 passed, then validated fragments and restored 98/98. External JS RED first showed missing new exports in the old artifact, then the actual raising-result mismatch, then omitted-options failure. Genuine logs retained under docs/validation/task5-*.log.
+
+Task 5 review: current-agent inline pass over option/input validation precedence, exact bounded conversion, snapshot/ignore behavior, deterministic field order, null versus absent, root paths, error-only envelopes and actual JS exception/default transport. No subagents or public operations; user supplemental documents remain untouched. No pending review findings or feature/precision reduction.
+
+Task 5: complete (base 2621e4d; implementation commit includes this entry). scripts/verify-task5.ps1 → exit 0: 15 basic + 15 keyed + 7 full-report fixtures verified, 98/98 tests, JS deny-warn check and release build, controlled Document boundary rejection, legacy 12 Node/Worker parsing cases, 15 complete Node/real Chrome Worker reports and text outputs byte-identical. Default/downward bytes/nodes/depth/number/change boundaries truly exercised, including 10000 versus 10001 changes. Exact toolchain/CPU/OS/browser versions are in task5-final.log. Core MVP reached; CLI, product website, formal benchmark, CI and final materials remain tasks 6–8. Next: task 6 Node CLI and exit codes 0/1/2.

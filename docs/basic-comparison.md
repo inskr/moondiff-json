@@ -2,7 +2,7 @@
 
 MoonBit 内部接口 `@diff.diff_documents(old, new, options)` 消费受控 Document，
 返回 `DiffReport::Success(summary, changes)`，预期错误抛出 `DiffError`。
-调用者先用同一 `options.limits` 构造两份 Document；正式 analyze 捕获错误的入口属于任务 5。
+调用者先用同一 `options.limits` 构造两份 Document；正式 analyze 捕获错误的入口已在任务 5 完成，见 reports-and-options.md。
 
 对象按解码后的 Unicode 码点字典序、深度优先比较；数组按共享索引比较，再报告尾部新增/删除。
 标量严格区分类型，数字只比较 NumberKey，字符串按解码后内容比较，不做 Unicode 规范化。

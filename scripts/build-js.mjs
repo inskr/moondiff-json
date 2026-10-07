@@ -24,5 +24,6 @@ async function discover(dir) {
 const artifacts = await discover(path.join(root, '_build', 'js', 'release', 'build'));
 if (artifacts.length !== 1) throw new Error(`Expected one bridge artifact, found ${artifacts.length}`);
 await mkdir(path.join(root, 'dist'), { recursive: true });
-await copyFile(artifacts[0], path.join(root, 'dist', 'moondiff-json.mjs'));
-console.log(`Bridge artifact: ${path.relative(root, artifacts[0])} -> dist/moondiff-json.mjs`);
+await copyFile(artifacts[0], path.join(root, 'dist', 'moondiff-json-core.mjs'));
+await copyFile(path.join(root, 'src', 'bridge', 'entry.mjs'), path.join(root, 'dist', 'moondiff-json.mjs'));
+console.log(`Bridge artifact: ${path.relative(root, artifacts[0])} -> dist/moondiff-json-core.mjs; string facade: dist/moondiff-json.mjs`);
