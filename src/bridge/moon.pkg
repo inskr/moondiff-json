@@ -1,0 +1,10 @@
+import {
+  "local/moondiff-json/src/input",
+  "moonbitstack/moonjson",
+}
+
+pkgtype(kind: "foreign_library")
+
+options(
+  link: { "js": { "format": "esm" } },
+)

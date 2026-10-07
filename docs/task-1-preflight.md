@@ -1,5 +1,7 @@
 # MoonDiff JSON — 任务 1 预检
 
+历史记录：这是文档补充前的初次预检。补充后的任务 1 结果见 [environment.md](environment.md) 和 [progress.md](progress.md)。
+
 日期：2026-10-07（Asia/Shanghai）
 
 状态：预检已执行；任务 1 尚未完成，未开始核心实现。

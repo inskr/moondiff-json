@@ -1,0 +1,17 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "local/moondiff-json/src/input"
+
+import {
+  "moonbitstack/moonjson",
+}
+
+// Values
+pub fn parse_input(String, max_depth? : Int) -> Json raise @moonjson.Malformed
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
