@@ -1,0 +1,68 @@
+[local/moondiff-json] test src/diff/properties_test.mbt:2 ("fixed corpus has swap symmetry self equality and deterministic repeat") failed: src/diff/properties_test.mbt:12:5-12:32@local/moondiff-json FAILED: `false` is not true
+[local/moondiff-json] test src/diff/properties_test.mbt:36 ("ignoring does not mutate validated documents or caller options") failed: src/diff/properties_test.mbt:41:29-41:61@local/moondiff-json FAILED: `0 != 1`
+diff:
+-0 +1
+[local/moondiff-json] test src/diff/ignore_test.mbt:2 ("ignore tokens do not match prefixes of member names") failed: src/diff/ignore_test.mbt:4:3-4:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 1)`
+diff:
+(0, 0, -0 +1, 0, -0 +1)
+[local/moondiff-json] test src/diff/ignore_test.mbt:9 ("ignore skips added removed and type changing subtrees once") failed: src/diff/ignore_test.mbt:11:3-11:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 0, 0, 3)`
+diff:
+(0, 0, 0, 0, -0 +3)
+[local/moondiff-json] test src/diff/ignore_test.mbt:16 ("duplicates and parent child ignores count outermost compared node") failed: src/diff/ignore_test.mbt:18:3-18:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 0, 0, 1)`
+diff:
+(0, 0, 0, 0, -0 +1)
+[local/moondiff-json] test src/diff/ignore_test.mbt:23 ("ignore counts existing equal nodes but not absent paths") failed: src/diff/ignore_test.mbt:25:3-25:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 0, 0, 1)`
+diff:
+(0, 0, 0, 0, -0 +1)
+[local/moondiff-json] test src/diff/ignore_test.mbt:29 ("root ignore is rejected even with identical inputs") failed: src/diff/test_helpers_test.mbt:37:20-37:58@local/moondiff-json FAILED: invalid configuration accepted
+[local/moondiff-json] test src/diff/ignore_test.mbt:34 ("ignore may target arrays but may never enter either side array") failed: src/diff/ignore_test.mbt:36:3-36:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 0, 0, 1)`
+diff:
+(0, 0, 0, 0, -0 +1)
+[local/moondiff-json] test src/diff/ignore_test.mbt:43 ("shadowed child ignore is still validated before parent skipping") failed: src/diff/test_helpers_test.mbt:37:20-37:58@local/moondiff-json FAILED: invalid configuration accepted
+[local/moondiff-json] test src/diff/ignore_test.mbt:48 ("ignore paths through scalars and missing prefixes do not match") failed: src/diff/ignore_test.mbt:50:3-50:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/ignore_test.mbt:55 ("escaped ignore tokens match literal empty and slash keys") failed: src/diff/ignore_test.mbt:57:3-57:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 0, 0, 1)`
+diff:
+(0, 0, 0, 0, -0 +1)
+[local/moondiff-json] test src/diff/ignore_test.mbt:61 ("unsupported keyed arrays never silently fall back to position") failed: src/diff/test_helpers_test.mbt:37:20-37:58@local/moondiff-json FAILED: invalid configuration accepted
+[local/moondiff-json] test src/diff/ignore_test.mbt:67 ("change limit accepts exact boundary and rejects overflow") failed: src/diff/ignore_test.mbt:70:3-70:44@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:22 ("fields use sorted depth first order and whole subtree slots") failed: src/diff/basic_test.mbt:24:3-24:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (1, 1, 2, 0, 0)`
+diff:
+(-0 +1, -0 +1, -0 +2, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:34 ("null differs from missing on both sides") failed: src/diff/basic_test.mbt:36:3-36:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (1, 1, 0, 0, 0)`
+diff:
+(-0 +1, -0 +1, 0, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:44 ("type changes are one modification per subtree") failed: src/diff/basic_test.mbt:46:3-46:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 3, 0, 0)`
+diff:
+(0, 0, -0 +3, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:55 ("root scalar uses an empty path and exact large integer tokens") failed: src/diff/basic_test.mbt:57:3-57:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:73 ("tiny decimal differences survive double underflow") failed: src/diff/basic_test.mbt:75:3-75:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:82 ("position insertion modifies shared indices then adds tail") failed: src/diff/basic_test.mbt:84:3-84:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (1, 0, 2, 0, 0)`
+diff:
+(-0 +1, 0, -0 +2, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:93 ("position deletion removes a whole tail value") failed: src/diff/basic_test.mbt:95:3-95:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 1, 0, 0, 0)`
+diff:
+(0, -0 +1, 0, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:102 ("empty containers of different types differ once") failed: src/diff/basic_test.mbt:104:3-104:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:111 ("paths escape empty Chinese emoji and slash tilde keys") failed: src/diff/basic_test.mbt:113:3-113:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 2, 0, 0)`
+diff:
+(0, 0, -0 +2, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:121 ("Unicode codepoint order differs from shortlex and UTF16") failed: src/diff/basic_test.mbt:123:3-123:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (5, 0, 0, 0, 0)`
+diff:
+(-0 +5, 0, 0, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:134 ("whole fragments sort codepoints and preserve quoted string and numbers") failed: src/diff/basic_test.mbt:136:3-136:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+[local/moondiff-json] test src/diff/basic_test.mbt:143 ("decoded strings equal without Unicode normalization") failed: src/diff/basic_test.mbt:145:3-145:54@local/moondiff-json FAILED: `(0, 0, 0, 0, 0) != (0, 0, 1, 0, 0)`
+diff:
+(0, 0, -0 +1, 0, 0)
+Total tests: 51, passed: 26, failed: 25.

@@ -1,0 +1,17 @@
+[
+  {"name":"identical nested inputs", "old":"{\"a\":[null,true,{\"x\":1}]}", "new":"{\"a\":[null,true,{\"x\":1}]}", "counts":[0,0,0,0,0], "changes":[]},
+  {"name":"object order and numeric notation are immaterial", "old":"{\"b\":2,\"aa\":1.0,\"a\":\"🌙\"}", "new":"{\"a\":\"\\ud83c\\udf19\",\"aa\":1e0,\"b\":2}", "counts":[0,0,0,0,0], "changes":[]},
+  {"name":"fields use sorted depth first order and whole subtree slots", "old":"{\"b\":{\"z\":1},\"a\":{\"x\":1},\"gone\":[1,2]}", "new":"{\"new\":{\"z\":9007199254740993,\"aa\":1e0,\"a\":null},\"b\":{\"z\":2},\"a\":{\"x\":2}}", "counts":[1,1,2,0,0], "changes":[["modified","/a/x","/a/x","1","2"],["modified","/b/z","/b/z","1","2"],["removed","/gone",null,"[1,2]",null],["added",null,"/new",null,"{\"a\":null,\"aa\":1e0,\"z\":9007199254740993}"]]},
+  {"name":"null differs from missing on both sides", "old":"{\"a\":null}", "new":"{\"b\":null}", "counts":[1,1,0,0,0], "changes":[["removed","/a",null,"null",null],["added",null,"/b",null,"null"]]},
+  {"name":"type changes are one modification per subtree", "old":"{\"a\":{\"x\":[1]},\"b\":false,\"c\":1}", "new":"{\"a\":[2,3],\"b\":0,\"c\":\"1\"}", "counts":[0,0,3,0,0], "changes":[["modified","/a","/a","{\"x\":[1]}","[2,3]"],["modified","/b","/b","false","0"],["modified","/c","/c","1","\"1\""]]},
+  {"name":"root scalar uses an empty path and exact large integer tokens", "old":"9007199254740992", "new":"9007199254740993", "counts":[0,0,1,0,0], "changes":[["modified","","","9007199254740992","9007199254740993"]]},
+  {"name":"zero and extreme decimal notation compare exactly", "old":"[0,1.20e2,1e-9999,10e10000]", "new":"[-0.0,120,10e-10000,100e9999]", "counts":[0,0,0,0,0], "changes":[]},
+  {"name":"tiny decimal differences survive double underflow", "old":"1e-10000", "new":"2e-10000", "counts":[0,0,1,0,0], "changes":[["modified","","","1e-10000","2e-10000"]]},
+  {"name":"position insertion modifies shared indices then adds tail", "old":"[1,2,3]", "new":"[1,9,2,3]", "counts":[1,0,2,0,0], "changes":[["modified","/1","/1","2","9"],["modified","/2","/2","3","2"],["added",null,"/3",null,"3"]]},
+  {"name":"position deletion removes a whole tail value", "old":"[1,{\"x\":[2]}]", "new":"[1]", "counts":[0,1,0,0,0], "changes":[["removed","/1",null,"{\"x\":[2]}",null]]},
+  {"name":"empty containers of different types differ once", "old":"{}", "new":"[]", "counts":[0,0,1,0,0], "changes":[["modified","","","{}","[]"]]},
+  {"name":"paths escape empty Chinese emoji and slash tilde keys", "old":"{\"\":{\"~/\":1},\"中文🌙\":true}", "new":"{\"\":{\"~/\":2},\"中文🌙\":false}", "counts":[0,0,2,0,0], "changes":[["modified","//~0~1","//~0~1","1","2"],["modified","/中文🌙","/中文🌙","true","false"]]},
+  {"name":"Unicode codepoint order differs from shortlex and UTF16", "old":"{}", "new":"{\"🌙\":0,\"\":0,\"b\":0,\"aa\":0,\"a\":0}", "counts":[5,0,0,0,0], "changes":[["added",null,"/a",null,"0"],["added",null,"/aa",null,"0"],["added",null,"/b",null,"0"],["added",null,"/",null,"0"],["added",null,"/🌙",null,"0"]]},
+  {"name":"whole fragments sort codepoints and preserve quoted string and numbers", "old":"null", "new":"{\"🌙\":9007199254740993,\"\":1e400,\"b\":\"line\\nquote\\\"slash\\\\\",\"aa\":-0.0,\"a\":[]}", "counts":[0,0,1,0,0], "changes":[["modified","","","null","{\"a\":[],\"aa\":-0.0,\"b\":\"line\\nquote\\\"slash\\\\\",\"\":1e400,\"🌙\":9007199254740993}"]]},
+  {"name":"decoded strings equal without Unicode normalization", "old":"[\"a\",\"é\"]", "new":"[\"\\u0061\",\"é\"]", "counts":[0,0,1,0,0], "changes":[["modified","/1","/1","\"é\"","\"é\""]]}
+]

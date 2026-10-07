@@ -1,10 +1,11 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1 and 2 authorized by the user in sequence.
+Scope: tasks 1–3 authorized by the user in sequence.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
-Tasks 3–8: pending.
+Task 3: complete (base 1802b89).
+Tasks 4–8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -47,3 +48,16 @@ Task 2 RED: 7 new primitive cases failed (8 existing/negative cases passed); mod
 Task 2 review: invalid Pointer text was being stored as error.path. Added a regression assertion, observed Some("x") != None, then changed this unknown location to None. A future options parser can attach a known valid configuration Pointer. No error envelope or comparison semantics changed.
 
 Task 2: complete (base 30f08a6; implementation commit includes this entry). scripts/verify-task2.ps1 → exit 0: JS check with deny-warn, 22/22 MoonBit tests, compiler rejection of unchecked external Document construction, release build, 12 Node cases and identical 12 real Chrome Worker outputs. RED and final logs saved in docs/validation. Current-agent inline review completed; no parallel agents or public operations. Next: task 3 object/position comparison and ignore rules with explicit Unicode codepoint ordering.
+
+Task 3 decisions:
+- Implement codepoint ordering and faithful ValueSlot fragments in src/report now because whole-subtree changes need them. The final envelope/text renderer and analyze remain task 5; no report schema changes.
+- Validate all ignore paths against both snapshots before applying a trie. Parent ignores cannot hide invalid child paths. Traverse only compared nodes: whole-subtree changes do not expand descendants merely to find nested ignore rules.
+- Keep a temporary explicit INVALID_OPTIONS guard for any array_rules instead of silently falling back to positional matching; task 4 replaces it.
+- Enforce max_changes during collection already. No partial report is returned on overflow; options JSON and comprehensive limit integration remain task 5.
+- Store hand-derived cases and generate formatted executable tests using the actual moonfmt stdin API. JavaScript reads only test fixture metadata, not product input documents.
+
+Task 3 RED: initial test wiring used unqualified re-exported constructors, then corrected to real base constructors. One draft fixture exceeded the explicit exponent limit; replaced by mathematically equal valid tokens. Runnable RED saved: 25 failed, 26 passed, 51 total. Minimal implementation GREEN: 51/51.
+
+Task 3 review: current-agent inline review of scalar/whole-subtree branching, Unicode ordering, dual paths, snapshot immutability, complete ignore prevalidation and bounded collection. No subagents per sequential scope. No precision reduction, feature deletion or report-semantic change; no deferred review findings.
+
+Task 3: complete (base 1802b89; implementation commit includes this entry). scripts/verify-task3.ps1 → exit 0: 15 saved fixtures match executable assertions, JS check with deny-warn, 51/51 MoonBit tests, external Document constructor rejection, release build, 12 Node parsing cases and identical 12 real Chrome module Worker outputs. Logs saved in docs/validation. Final report byte comparisons and performance benchmarks are not claimed. No public operations. Next: task 4 explicit unique-key arrays.

@@ -1,3 +1,5 @@
 import {
   "local/moondiff-json/src/model/base",
+  "local/moondiff-json/src/model",
+  "local/moondiff-json/src/report",
 }
