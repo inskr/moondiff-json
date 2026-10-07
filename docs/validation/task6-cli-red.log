@@ -1,0 +1,143 @@
+FAIL golden/process: config review demo: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL golden/process: API keyed users demo: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL golden/process: API checked order demo: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL golden/process: large integer root demo: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL golden/process: null missing slots: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL golden/process: exact notation equal: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL golden/process: duplicate identity visible error: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"INVALID_ARRAY_KEY","message":"Duplicate identity at array \\"/users\\", index 1","side":"new","path":"/users/1/id","line":null,"column":null}}'
+
+FAIL golden/process: unknown options precede invalid documents: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"INVALID_OPTIONS","message":"Invalid options value","side":"options","path":"/unexpected","line":null,"column":null}}'
+
+FAIL golden/process: duplicate option property: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"DUPLICATE_KEY","message":"Invalid JSON document","side":"options","path":null,"line":1,"column":25}}'
+
+FAIL golden/process: duplicate decoded object keys: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"DUPLICATE_KEY","message":"Invalid JSON document","side":"old","path":null,"line":1,"column":18}}'
+
+FAIL golden/process: strict trailing input: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"PARSE_ERROR","message":"Invalid JSON document","side":"new","path":null,"line":1,"column":3}}'
+
+FAIL golden/process: explicit numeric exponent overflow: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"NUMBER_LIMIT","message":"Number token exceeds 256 characters or explicit exponent exceeds 10000","side":"new","path":null,"line":null,"column":null}}'
+
+FAIL golden/process: fractional identity: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"INVALID_ARRAY_KEY","message":"Identity must be a string or exact integer at array \\"\\", index 0","side":"new","path":"/0/id","line":null,"column":null}}'
+
+FAIL golden/process: array ignore traversal: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"INVALID_OPTIONS","message":"Object paths cannot enter an array","side":"options","path":"/ignore_paths/0","line":null,"column":null}}'
+
+FAIL golden/process: bounded complete report: CLI must emit exact shared report bytes without logs/newline
++ actual - expected
+
++ ''
+- '{"schema_version":"1.0","ok":false,"error":{"code":"CHANGE_LIMIT","message":"Difference exceeds change limit","side":null,"path":null,"line":null,"column":null}}'
+
+FAIL default format is MoonBit text; equal exits 0: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL default text differences exit 1 and preserve exact numbers: Expected values to be strictly equal:
+
+2 !== 1
+
+FAIL missing old file exits 2 with IO_ERROR: Unexpected end of JSON input
+FAIL invalid UTF-8 on old exits 2 without replacement characters: Unexpected end of JSON input
+FAIL missing new file exits 2 with IO_ERROR: Unexpected end of JSON input
+FAIL invalid UTF-8 on new exits 2 without replacement characters: Unexpected end of JSON input
+FAIL missing options file exits 2 with IO_ERROR: Unexpected end of JSON input
+FAIL invalid UTF-8 on options exits 2 without replacement characters: Unexpected end of JSON input
+FAIL directory input is IO_ERROR: Unexpected end of JSON input
+FAIL text IO failure emits a report plus stderr diagnostic: The input did not match the regular expression /^error: IO_ERROR\n/. Input:
+
+''
+
+FAIL strict UTF-8 rejects overlong: Unexpected end of JSON input
+FAIL strict UTF-8 rejects surrogate: Unexpected end of JSON input
+FAIL strict UTF-8 rejects truncated: Unexpected end of JSON input
+FAIL strict UTF-8 rejects out of range: Unexpected end of JSON input
+FAIL argument error: unknown flag: Unexpected end of JSON input
+FAIL argument error: missing format value: Unexpected end of JSON input
+FAIL argument error: missing options value: Unexpected end of JSON input
+FAIL argument error: duplicate format: Unexpected end of JSON input
+FAIL argument error: duplicate options: Unexpected end of JSON input
+FAIL argument error: only one input: Unexpected end of JSON input
+FAIL argument error: no input: Unexpected end of JSON input
+FAIL argument error: third input: Unexpected end of JSON input
+FAIL argument error: help mixed with inputs: Unexpected end of JSON input
+FAIL unsupported format exits 2: The input did not match the regular expression /^error: INVALID_OPTIONS\n/. Input:
+
+''
+
+FAIL --help is usable from another cwd: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL --version follows package metadata: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL -- terminates options for leading-dash filenames and spaces: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL one UTF-8 BOM on each input is allowed: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL two leading BOMs are not silently stripped: Unexpected end of JSON input
+FAIL preserved BOM bytes count toward MoonBit byte limit: Unexpected end of JSON input
+FAIL oversized valid JSON is rejected without truncation: Unexpected end of JSON input
+FAIL --help and --version work before build: Expected values to be strictly equal:
+
+2 !== 0
+
+FAIL missing build artifacts are runtime error 2 with useful stderr: The input did not match the regular expression /build:js/. Input:
+
+'moondiff-json: CLI not implemented\n'
+
+PASS all source inputs remain byte-identical
+CLI smoke: 1/49 passed, 48 failed; Node v22.23.3, win32/x64. Fixtures: F:\MOONBit\work\probes\cli smoke 中文 nGQkdF

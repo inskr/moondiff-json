@@ -1,13 +1,14 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1–5 authorized by the user in sequence.
+Scope: tasks 1–6 authorized by the user in sequence.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
 Task 3: complete (base 1802b89).
 Task 4: complete (base 9cf462a).
 Task 5: complete (base 2621e4d).
-Tasks 6–8: pending.
+Task 6: complete (base df9d62a).
+Tasks 7–8: pending.
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -89,3 +90,17 @@ Task 5 RED: 96 total, 20 failed/76 passed. Actual dependency-signature compile e
 Task 5 review: current-agent inline pass over option/input validation precedence, exact bounded conversion, snapshot/ignore behavior, deterministic field order, null versus absent, root paths, error-only envelopes and actual JS exception/default transport. No subagents or public operations; user supplemental documents remain untouched. No pending review findings or feature/precision reduction.
 
 Task 5: complete (base 2621e4d; implementation commit includes this entry). scripts/verify-task5.ps1 → exit 0: 15 basic + 15 keyed + 7 full-report fixtures verified, 98/98 tests, JS deny-warn check and release build, controlled Document boundary rejection, legacy 12 Node/Worker parsing cases, 15 complete Node/real Chrome Worker reports and text outputs byte-identical. Default/downward bytes/nodes/depth/number/change boundaries truly exercised, including 10000 versus 10001 changes. Exact toolchain/CPU/OS/browser versions are in task5-final.log. Core MVP reached; CLI, product website, formal benchmark, CI and final materials remain tasks 6–8. Next: task 6 Node CLI and exit codes 0/1/2.
+
+Task 6 decisions:
+- Ruling: Keep all error-envelope serialization in MoonBit, including client IO/encoding/argument failures. Add the narrow client_error(code, message, side) string export; reject unsupported transport metadata rather than inventing a fake diff. Cost: one additional public bridge helper; analyze/report semantics are unchanged.
+- Keep user file bytes intact through fatal UTF-8 decoding with ignoreBOM=true, so MoonBit strips exactly one BOM and counts its original bytes. Read options before document files, and pass all three strings directly to analyze. JSON.parse is used only for package metadata and returned report envelopes.
+- JSON stdout is exactly the core report string, with no appended newline; text and stderr error diagnostics use the shared MoonBit formatter. Exit status derives only from ok/equal. Runtime failures without a loadable core return 2 and useful stderr, with empty stdout.
+- Strictly reject unknown, duplicate and missing-value flags and wrong file counts; support an option terminator for input filenames. --help and --version are standalone and work without build artifacts, independently of the current directory. Register the local bin name while keeping package private.
+
+Task 6 RED: compileable CLI stub produced 48 failed/1 passed out of 49 real process tests; raw log task6-cli-red.log. New client-error adapter stub produced 3 failed/98 passed out of 101 core tests; runnable RED in task6-error-red.log. Test wiring was corrected from map indexing (Json result) to get (Option result) using existing tested APIs. The first implementation run exposed an incorrect new text expectation (existing side strings are quoted); corrected that expectation without changing the renderer.
+
+Task 6 review: current-agent inline check of strict file decoding, BOM preservation, error-side/unknown-location handling, no user-document JSON.parse or writes, stable imports, stdout/stderr separation, actual process exit codes and all fixture bytes. No subagents, public operations, precision reduction or core feature removal. User supplemental documents remain untouched; no pending review finding.
+
+README verification: the committed examples/config files produced one timeout change and one ignored subtree in text and JSON, both with the expected exit 1; actual output saved in task6-readme-demo.log. npm run cli:smoke also executed successfully with 49/49 process tests after package script registration.
+
+Task 6: complete (base df9d62a; implementation commit includes this entry). scripts/verify-task6.ps1 → exit 0: 101/101 MoonBit tests, deny-warn JS check, release build, controlled Document boundary rejection, legacy 12 Node/real Chrome Worker parsing cases, 49/49 CLI smoke tests, 15 complete success/error JSON and text reports byte-identical across direct bridge, CLI and actual Chrome 154.0.8037.98 module Worker. Windows 11 x64 10.0.22631, i7-12700H, Node 22.23.3, moon 0.1.20260920, moonc/core 0.10.14+7d59c7ec9; real RED/GREEN/final logs saved under docs/validation/task6-*.log. Linux remains untested and no formal performance result is claimed. Next: task 7 static product website with Worker timeout/cancel/stale-result handling.

@@ -62,6 +62,44 @@ pub fn format_text(text : String) -> String {
 }
 
 ///|
+/// Client transport failures use the same MoonBit-owned error envelope.
+#export_name("client_error")
+pub fn client_error(code : String, message : String, side : String) -> String {
+  let invalid = (
+      code != "IO_ERROR" &&
+      code != "ENCODING_ERROR" &&
+      code != "INVALID_OPTIONS"
+    ) ||
+    (side != "" && side != "old" && side != "new" && side != "options")
+  let info : @base.ErrorInfo = {
+    code: match code {
+      "IO_ERROR" if !invalid => IoError
+      "ENCODING_ERROR" if !invalid => EncodingError
+      _ => InvalidOptions
+    },
+    message: if invalid {
+      "Invalid client error metadata"
+    } else {
+      message
+    },
+    side: if invalid {
+      None
+    } else {
+      match side {
+        "old" => Some(Old)
+        "new" => Some(New)
+        "options" => Some(Options)
+        _ => None
+      }
+    },
+    path: None,
+    line: None,
+    column: None,
+  }
+  @report.render_json(@model.Error(info))
+}
+
+///|
 /// Only JS exception transport; all validation and report bytes stay in MoonBit.
 extern "js" fn throw_format_error(report_text : String) -> String =
   #| function(reportText) {

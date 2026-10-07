@@ -1,0 +1,93 @@
+moon 0.1.20260920 (914d7da 2026-09-20) F:\MOONBit\.tools\moon\bin\moon.exe
+moonc v0.10.14+7d59c7ec9 (2026-09-18) F:\MOONBit\.tools\moon\bin\moonc.exe
+moonrun 0.1.20260920 (914d7da 2026-09-20) F:\MOONBit\.tools\moon\bin\moonrun.exe
+
+Feature flags enabled: rr_moon_mod,rr_moon_pkg
+Task 6 verification: Node v22.23.3, win32/x64, OS 10.0.22631, CPU 12th Gen Intel(R) Core(TM) i7-12700H
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/verify-task5.mjs
+Task 5 verification: Node v22.23.3, win32/x64, OS 10.0.22631, CPU 12th Gen Intel(R) Core(TM) i7-12700H
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/generate-basic-tests.mjs --check
+15 saved basic fixtures match their executable MoonBit assertions.
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/generate-keyed-tests.mjs --check
+15 saved keyed fixtures match their executable MoonBit assertions.
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/generate-report-tests.mjs --check
+7 full report fixtures match executable assertions.
+> moon info --target js
+Finished. moon: no work to do
+> moon fmt --check
+Finished. moon: ran 43 tasks, now up to date
+> moon check --target js --deny-warn
+Finished. moon: ran 8 tasks, now up to date
+> moon test --target js
+Total tests: 101, passed: 101, failed: 0.
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/check-document-boundary.mjs
+Document boundary: unchecked external construction rejected by the compiler
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/build-js.mjs
+Finished. moon: no work to do
+Bridge artifact: _build\js\release\build\src\bridge\bridge.js -> dist/moondiff-json-core.mjs; string facade: dist/moondiff-json.mjs
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/probe-js.mjs
+Node probe: 12 cases plus deterministic repeat passed
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/prepare-worker-probe.mjs
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/probe-browser.mjs
+PASS: 12 browser Worker outputs equal Node bytes
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/probe-analyze.mjs
+Node analyze: 15 complete success/error reports; exact golden bytes, repeat and MoonBit format_text passed (v22.23.3).
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/prepare-analyze-worker.mjs
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/probe-analyze-browser.mjs
+PASS: 15 complete analyze reports equal Node bytes
+Verified browser: 154.0.8037.98; headless; real-time module Worker; localhost HTTP; report and formatted text bytes identical to Node.
+Task 5 core MVP verification passed. CLI, product website and formal benchmarks remain tasks 6–8.
+> F:\MOONBit\.tools\node-v22.23.3-win-x64\node.exe scripts/cli-smoke.mjs
+PASS golden/process: config review demo
+PASS golden/process: API keyed users demo
+PASS golden/process: API checked order demo
+PASS golden/process: large integer root demo
+PASS golden/process: null missing slots
+PASS golden/process: exact notation equal
+PASS golden/process: duplicate identity visible error
+PASS golden/process: unknown options precede invalid documents
+PASS golden/process: duplicate option property
+PASS golden/process: duplicate decoded object keys
+PASS golden/process: strict trailing input
+PASS golden/process: explicit numeric exponent overflow
+PASS golden/process: fractional identity
+PASS golden/process: array ignore traversal
+PASS golden/process: bounded complete report
+PASS default format is MoonBit text; equal exits 0
+PASS default text differences exit 1 and preserve exact numbers
+PASS missing old file exits 2 with IO_ERROR
+PASS invalid UTF-8 on old exits 2 without replacement characters
+PASS missing new file exits 2 with IO_ERROR
+PASS invalid UTF-8 on new exits 2 without replacement characters
+PASS missing options file exits 2 with IO_ERROR
+PASS invalid UTF-8 on options exits 2 without replacement characters
+PASS directory input is IO_ERROR
+PASS text IO failure emits a report plus stderr diagnostic
+PASS strict UTF-8 rejects overlong
+PASS strict UTF-8 rejects surrogate
+PASS strict UTF-8 rejects truncated
+PASS strict UTF-8 rejects out of range
+PASS argument error: unknown flag
+PASS argument error: missing format value
+PASS argument error: missing options value
+PASS argument error: duplicate format
+PASS argument error: duplicate options
+PASS argument error: only one input
+PASS argument error: no input
+PASS argument error: third input
+PASS argument error: help mixed with inputs
+PASS unsupported format exits 2
+PASS --help is usable from another cwd
+PASS --version follows package metadata
+PASS -- terminates options for leading-dash filenames and spaces
+PASS one UTF-8 BOM on each input is allowed
+PASS two leading BOMs are not silently stripped
+PASS preserved BOM bytes count toward MoonBit byte limit
+PASS oversized valid JSON is rejected without truncation
+PASS --help and --version work before build
+PASS missing build artifacts are runtime error 2 with useful stderr
+PASS all source inputs remain byte-identical
+CLI smoke: 49/49 passed, 0 failed; Node v22.23.3, win32/x64. Fixtures: F:\MOONBit\work\probes\cli smoke 中文 y4wRox
+Parity: 15 reports and text outputs byte-identical across direct bridge, CLI and Chrome 154.0.8037.98 module Worker.
+Task 6 verification passed on Windows. Linux is untested; product website and formal benchmarks remain tasks 7–8.

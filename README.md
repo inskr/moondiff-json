@@ -1,13 +1,69 @@
 # MoonDiff JSON
 
-MoonBit JSON 结构化差异库，计划配套 Node CLI `moondiff-json` 与静态网页，
-用于配置审查、API 回归和测试快照比较。当前完成任务 1–5，核心 MVP 可用：
+MoonBit JSON 结构化差异库，配套 Node CLI `moondiff-json`，静态网页正在计划中，
+用于配置审查、API 回归和测试快照比较。当前完成任务 1–6，核心和 CLI 可用：
 严格解析、精确数字、对象／位置数组／唯一键数组比较、忽略规则和确定性 JSON／文字报告。
 共享 JS 字符串入口 `analyze` 已通过 Node 和真实浏览器 Worker 验证。
-CLI、产品网页和正式性能基准仍待任务 6–8。
+产品网页和正式性能基准仍待任务 7–8。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
 主要比较 MoonBit 源码。本项目针对 JSON 数据结构，不宣称生态首创。
+
+## CLI 运行与验证（Windows x64）
+
+已按下面的环境准备步骤安装工具链后，在项目根目录运行：
+
+```powershell
+# 设置当前进程的固定 MoonBit / Node 22 工具路径，再构建
+.\scripts\moon.ps1 version --all
+& node.exe scripts/build-js.mjs
+
+& node.exe cli/moondiff-json.mjs --help
+& node.exe cli/moondiff-json.mjs --version
+& node.exe cli/moondiff-json.mjs examples/config/old.json examples/config/new.json --options examples/config/options.json
+# 上面的配置审查示例只有 timeout 变化，预期退出码 1
+$LASTEXITCODE
+& node.exe cli/moondiff-json.mjs examples/config/old.json examples/config/new.json --options examples/config/options.json --format json
+```
+
+语法：`node cli/moondiff-json.mjs old.json new.json [--format text|json] [--options options.json]`。
+默认文字输出；选项默认 `{}`。`--help`、`--version` 单独使用。
+路径有空格时加引号；以 `-` 开头的输入文件名可放在 `--` 后：
+
+```powershell
+& node.exe cli/moondiff-json.mjs 'C:\data\old config.json' 'C:\data\new config.json' --format json
+& node.exe cli/moondiff-json.mjs --format json -- '-old.json' '-new.json'
+```
+
+报告写 stdout，错误诊断写 stderr。JSON 模式直接输出核心报告字节，末尾不额外加换行，
+可单独保存 stdout；错误报告没有 summary 或部分 changes。
+退出码 **0** 表示指定策略下相等，**1** 表示有变化，**2** 表示参数、输入、IO 或运行错误。
+CI 应分别处理 0 和 1；1 是正常差异结果。构建产物缺失时退出 2，stderr 提示构建命令；
+此时无法调用核心生成报告，stdout 为空。
+
+文件均严格按 UTF-8 解码，包含两份文档和 options；拒绝非法字节序列。
+保留 BOM 交给核心只剥离开头的一个，原始字节仍计入限额。
+文档和 options 的原始字符串直接传给 analyze，不经过 JS JSON.parse，不写回输入文件。
+所有比较、选项校验、JSON 和文字报告由 MoonBit 生成；JS 只读取报告 envelope 确定退出码。
+资源上限和唯一键规则见 [docs/reports-and-options.md](docs/reports-and-options.md)。
+
+完整验收及独立 CLI 烟测命令：
+
+```powershell
+.\scripts\verify-task6.ps1
+# 已构建后，可只运行进程级烟测；也可 npm run cli:smoke
+& node.exe scripts/cli-smoke.mjs
+```
+
+烟测覆盖 0/1/2、7 个黄金报告和 8 个错误夹具、默认/显式文字和 JSON、缺文件、目录输入、
+三侧非法 UTF-8、未知/重复/缺值参数、带空格及中文路径、`--`、BOM、字节上限、
+无构建时的帮助与版本，以及输入文件字节保持不变。
+完整验收另运行全部核心测试、JS 检查与 release build、真实浏览器模块 Worker。
+实际结果：**101/101 核心测试、49/49 CLI 烟测**；15 项报告和文字在 bridge、CLI 与
+Chrome 154.0.8037.98 Worker 间逐字节一致。
+环境为 Windows 11 x64、Node 22.23.3；**Linux 尚未测试**。
+原始记录见 [docs/validation/task6-final.log](docs/validation/task6-final.log)。
+当前 package 保持 private，仅注册 bin 名称，未发布到 npm。
 
 ## 任务 1 复现（Windows x64）
 

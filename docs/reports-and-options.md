@@ -70,6 +70,13 @@ error 固定字段为 code、message、side、path、line、column；
 客户端的 ENCODING_ERROR / IO_ERROR 也可由文字渲染器消费。
 报告不含耗时、时钟或随机值。文字报告使用 <absent> 区分缺失与真实 null，路径按 JSON 字符串展示。
 
+任务 6 新增字符串适配 `client_error(code, message, side)`，供客户端已知的 IO、UTF-8 和
+参数失败使用同一 MoonBit 序列化器；不比较用户文档。
+code 只允许 IO_ERROR、ENCODING_ERROR、INVALID_OPTIONS；side 为 old/new/options 或空字符串
+（序列化为 null）。未知元数据变成 INVALID_OPTIONS，message 为 Invalid client error metadata。
+这些客户端错误的 path/line/column 均为 null；文件名属于 message，不伪装成 JSON Pointer。
+JSON CLI 输出与 analyze 返回的字符串逐字节相同，不额外加换行；文字和错误诊断调用 format_text。
+
 10000 条变化的 envelope 元数据节点可超过 100000，且输出可大于单侧输入上限。
 文字入口不会把文档的 2 MiB/100000 节点限额误用于完整报告；
 它仍严格拒绝重复字段/尾随输入、在解析时限制深度，并验证变化条数及报告结构。
