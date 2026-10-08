@@ -1,0 +1,5 @@
+FAIL seed=539365384 adjacent-integers: Expected values to be strictly equal:
+
+true !== false
+
+Reproduce: node scripts/properties.mjs --replay work/property-failures/adjacent-integers.json --mutate-equal

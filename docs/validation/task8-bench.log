@@ -1,0 +1,14 @@
+
+> moondiff-json@0.1.0 bench
+> node bench/run.mjs
+
+1MiB-10000-records-10-fields-position: median 77.559 ms [68.747, 90.778]
+1MiB-10000-records-10-fields-by-key: median 99.421 ms [92.545, 128.425]
+10000-keyed-reverse-default: median 102.385 ms [91.351, 135.122]
+10000-keyed-reverse-check-order: median 106.181 ms [97.378, 137.185]
+10000-all-fields-changed: median 89.802 ms [80.498, 116.566]
+byte-limit-rejection: median 0.603 ms [0.553, 1.906]
+node-limit-rejection: median 38.681 ms [34.540, 50.916]
+depth-limit-rejection: median 0.016 ms [0.014, 0.018]
+change-limit-rejection: median 6.117 ms [4.863, 7.545]
+Benchmark recorded; main median <=1000ms: true. No CI timing gate.

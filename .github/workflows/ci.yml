@@ -1,0 +1,42 @@
+name: acceptance
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  windows-js:
+    runs-on: windows-2022
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, resolved 2026-10-08
+      - name: Install hash-checked MoonBit and Node versions
+        shell: pwsh
+        run: ./scripts/setup-windows.ps1
+      - name: Install locked dependencies and pinned Chromium revision
+        shell: pwsh
+        run: |
+          ./scripts/moon.ps1 version --all
+          npm.cmd ci
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          moon.exe update
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node node_modules/playwright-core/cli.js install chromium
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Run full acceptance
+        shell: pwsh
+        run: |
+          ./scripts/moon.ps1 version --all
+          $env:MOONDIFF_BROWSER = node --input-type=module -e "import {chromium} from 'playwright-core'; console.log(chromium.executablePath())"
+          npm.cmd run acceptance 2>&1 | Tee-Object acceptance.log
+          exit $LASTEXITCODE
+      - name: Retain logs, failure samples and browser artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, resolved 2026-10-08
+        with:
+          name: acceptance-evidence
+          path: |
+            acceptance.log
+            work/properties/
+            work/property-failures/
+            work/web-smoke/result.json
+            output/playwright/
+          if-no-files-found: ignore

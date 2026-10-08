@@ -20,6 +20,8 @@ Pre-flight interfaces:
 
 Ruling: Work in the designated, previously empty project directory on a new local task branch. No existing implementation or user changes are replaced; no additional worktree is needed.
 Ruling: The supplied spec and plan are approved. Do not repeat brainstorming approval or create a competing plan. Current-agent sequential execution overrides skill suggestions to delegate.
+
+Task 8: in progress (base 217e924). Add unified acceptance, fixed-seed properties, actual benchmarks, CI, clean rebuild, runtime license bundle and hackathon materials including an actual 2–3 minute recording. Preserve sequential execution and all user supplemental documents. No public operations authorized.
 Ruling: Adapt Bash-only skill bookkeeping to the existing PowerShell environment and keep a tracked ledger here; do not install an extra shell for bookkeeping.
 
 Initial environment: Node v24.19.0, npm 11.17.0, Git 2.50.1.windows.1; moon not found. Need project-local official toolchain and target Node 22.

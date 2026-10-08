@@ -20,7 +20,12 @@
     "verify:task6": "node scripts/verify-task6.mjs",
     "serve": "node scripts/serve.mjs",
     "web:smoke": "node scripts/web-smoke.mjs",
-    "verify:task7": "node scripts/verify-task7.mjs"
+    "verify:task7": "node scripts/verify-task7.mjs",
+    "acceptance": "node scripts/acceptance.mjs",
+    "properties": "node scripts/properties.mjs",
+    "bench": "node bench/run.mjs",
+    "demo:record": "node scripts/record-demo.mjs",
+    "prepare:local": "node scripts/prepare-local.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.63.0"

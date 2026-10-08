@@ -1,13 +1,54 @@
 # MoonDiff JSON
 
 MoonBit JSON 结构化差异库，配套 Node CLI `moondiff-json` 与静态网页，
-用于配置审查、API 回归和测试快照比较。当前完成任务 1–7，核心、CLI 和网页可用：
+用于配置审查、API 回归和测试快照比较。核心、CLI 和网页可用：
 严格解析、精确数字、对象／位置数组／唯一键数组比较、忽略规则和确定性 JSON／文字报告。
 共享 JS 字符串入口 `analyze` 已通过 Node 和真实浏览器 Worker 验证。
-正式性能基准、CI、干净构建验收和最终参赛材料仍待任务 8。
+统一验收、真实性能记录和参赛材料见下文；公开仓库、站点、包和报名尚未提交。
 
 生态已有 [moonbit-community/moondiff](https://mooncakes.io/docs/moonbit-community/moondiff)，
 主要比较 MoonBit 源码。本项目针对 JSON 数据结构，不宣称生态首创。
+
+## 从干净源码重建（Windows x64）
+
+在源码根目录、PowerShell 中顺序执行。首次需要网络以及已安装的 Chrome 或 Edge。
+不要复制 dist、_build、node_modules 或 .mooncakes；它们由命令重新生成。
+
+```powershell
+.\scripts\setup-windows.ps1
+.\scripts\moon.ps1 version --all
+& npm.cmd ci
+& moon.exe update
+& npm.cmd run acceptance
+& npm.cmd run bench
+& npm.cmd run prepare:local
+& npm.cmd run serve
+```
+
+每条命令退出非零时先解决错误再继续。setup 只安装到本项目 .tools，不改用户 PATH 或执行策略；
+moon.ps1 只设置当前进程环境。固定 Node 22.23.3、moon 0.1.20260920、moonc/core 0.10.14+7d59c7ec9、
+moonjson 0.4.0 和 playwright-core 1.63.0。官方 MoonBit/core 归档链接标示 2026-11-20 到期；
+之后需重新选择并验证工具链，见 [环境与 SHA256](docs/environment.md)。Linux 尚未测试。
+
+acceptance 运行 MoonBit 格式、deny-warn 检查、101 项测试、release JS 构建、黄金夹具和 Document
+编译边界、49 项 CLI（含退出码 0/1/2）、7 项 Worker、34 项真实网页，以及 seed 539365384 的
+225 个属性案例。三端黄金报告和 15 个生成案例逐字节一致。失败样本保存到 work/property-failures，
+终端给出 --replay 命令，CI 保留样本。--mutate-equal 仅用于证明断言拒绝错误适配器，不进入产品。
+
+bench 独立运行，每项预热 5 次、测量 20 次，包含解析、校验、精确比较和 JSON 报告，
+排除 IO、启动和呈现，不作为 CI 机器相关硬门槛。
+主案例每侧约 1 MiB、10000 记录、10 字段变化：位置中位数 77.559 ms，唯一键中位数 99.421 ms。
+完整结果、版本和原始样本见 [bench/results.md](bench/results.md) 与 [bench/results.json](bench/results.json)。
+2026-10-08 本机统一验收通过，见 [日志](docs/validation/task8-acceptance.log)。
+
+[CI 配置](.github/workflows/ci.yml) 固定 Windows runner 系列、工具/依赖和 action SHA；
+浏览器用 Playwright 固定 Chromium revision。远程 CI 尚未运行。
+prepare:local 在 work/release/moondiff-json-0.1.0 准备 CLI、网页、许可文本与 SHA256 清单，不执行发布。
+运行分发须保留 LICENSE、THIRD_PARTY_NOTICES.md 与 licenses/，以及两个 dist 模块。
+
+参赛材料：[一页说明](docs/project-one-pager.md)、[生态对比与边界](docs/ecosystem.md)、
+[AI 使用说明](docs/ai-usage.md)、[演示步骤与录像](docs/demo.md)。下面保留历史阶段说明；
+阶段结果以各自日期与日志为准。
 
 ## CLI 运行与验证（Windows x64）
 
