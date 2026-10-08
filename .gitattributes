@@ -4,3 +4,5 @@ docs/validation/*.log whitespace=-blank-at-eol
 *.mjs text eol=lf
 *.js text eol=lf
 *.yml text eol=lf
+# moon info regenerates tracked interfaces with LF on every platform.
+*.mbti text eol=lf

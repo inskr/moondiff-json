@@ -69,6 +69,9 @@ Actions 运行 Summary → Artifacts，保留 14 天：
 解压后验证。打包拒绝未提交跟踪改动和未跟踪新源码。被 .gitignore 排除的本地记录不进入源码包。
 prepare:local 使用全新 staging，旧运行目录留存为 .previous-时间戳备份，不将残留文件合并进新包。
 
+生成的 `.mbti` 接口文件固定使用 LF，确保 Windows 的 CRLF 检出配置不会让 `moon info`
+产生仅换行变化的脏工作区。打包检查仍拒绝真实改动，并在失败日志中列出改动文件。
+
 运行包解压后无需 npm install 或 MoonBit，使用 Node 22：
 
 ```bash
