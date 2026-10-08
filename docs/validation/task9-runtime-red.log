@@ -1,0 +1,20 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Runtime must include an independent npm serve command
++ actual - expected
+
++ undefined
+- 'node scripts/serve.mjs'
+
+    at file:///F:/MOONBit/scripts/verify-release.mjs:25:8 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: 'node scripts/serve.mjs',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

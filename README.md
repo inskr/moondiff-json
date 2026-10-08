@@ -44,10 +44,15 @@ bench 独立运行，每项预热 5 次、测量 20 次，包含解析、校验�
 只复用会重新校验 SHA256 的工具下载归档，没有复制任何构建或依赖安装输出；
 见 [干净重建日志](docs/validation/task8-clean-rebuild.log)。两目录生成的核心 JS SHA256 相同。
 
-[CI 配置](.github/workflows/ci.yml) 固定 Windows runner 系列、工具/依赖和 action SHA；
-浏览器用 Playwright 固定 Chromium revision。远程 CI 尚未运行。
+[CI 配置](.github/workflows/ci.yml) 覆盖 ubuntu-24.04 和 windows-2022，固定工具/依赖和 action SHA；
+浏览器用 Playwright 固定 Chromium revision。远程 CI 尚未运行，**Linux 尚未实测**。
+任务 9 的本地/CI 命令、手动触发、日志与产物下载、推送授权后的步骤见
+[远程 CI 与 Linux 验证](docs/ci-linux.md)。
 prepare:local 在 work/release/moondiff-json-0.1.0 准备 CLI、网页、许可文本与 SHA256 清单，不执行发布。
 运行分发须保留 LICENSE、THIRD_PARTY_NOTICES.md 与 licenses/，以及两个 dist 模块。
+任务 9 运行包另含独立服务器，解压后用 Node 22 执行 `npm run serve` 即可打开网页。
+`npm run prepare:release` 从干净的已提交源码重新构建、检查运行包、打包并解压再验，
+输出到 `work/release/task9/`；任务 8 的根目录 ZIP 为历史交付，不代表任务 9 源码。
 
 参赛材料：[一页说明](docs/project-one-pager.md)、[生态对比与边界](docs/ecosystem.md)、
 [AI 使用说明](docs/ai-usage.md)、[演示步骤与录像](docs/demo.md)。下面保留历史阶段说明；

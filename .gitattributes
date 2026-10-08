@@ -1,2 +1,6 @@
 # Preserve actual compiler diagnostic spacing in verification evidence.
 docs/validation/*.log whitespace=-blank-at-eol
+*.sh text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.yml text eol=lf

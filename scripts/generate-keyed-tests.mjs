@@ -1,7 +1,6 @@
 // Test-only fixture metadata; input documents remain strings for MoonBit.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { resolve } from 'node:path';
 import assert from 'node:assert/strict';
 const cases = JSON.parse(readFileSync('fixtures/keyed/cases.json', 'utf8'));
 const q = JSON.stringify;
@@ -13,7 +12,7 @@ const content = '// Generated from fixtures/keyed/cases.json by scripts/generate
     `Some((${option(i[0])}, ${option(i[1])}, ${q(i[2])}, ${q(i[3])}))`).join(',\n');
   return `\n///|\ntest ${q(c.name)} {\nlet (s,c) = basic_result(${q(c.old)}, ${q(c.new)}, keyed_options(${q(c.path)}, ${q(c.key)}, ${c.order}))\nassert_eq(summary_counts(s), (${c.counts.join(', ')}))\nassert_eq(change_rows(c), [${rows}])\nassert_eq(identity_rows(c), [${identities}])\n}\n`;
 }).join('');
-const formatter = spawnSync(resolve('.tools/moon/bin/moonfmt.exe'), ['-'], {
+const formatter = spawnSync('moonfmt', ['-'], {
   input: content, encoding: 'utf8', windowsHide: true,
 });
 if (formatter.error) throw formatter.error;

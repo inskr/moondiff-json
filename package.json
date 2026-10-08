@@ -25,7 +25,9 @@
     "properties": "node scripts/properties.mjs",
     "bench": "node bench/run.mjs",
     "demo:record": "node scripts/record-demo.mjs",
-    "prepare:local": "node scripts/prepare-local.mjs"
+    "prepare:local": "node scripts/prepare-local.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "prepare:release": "node scripts/package-local.mjs"
   },
   "devDependencies": {
     "playwright-core": "1.63.0"

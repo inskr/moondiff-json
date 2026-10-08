@@ -2,7 +2,6 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { resolve } from 'node:path';
 const cases = JSON.parse(readFileSync('fixtures/basic/cases.json', 'utf8'));
 const q = JSON.stringify;
 const option = value => value === null ? 'None' : `Some(${q(value)})`;
@@ -12,7 +11,7 @@ const content = '// Generated from fixtures/basic/cases.json by scripts/generate
   return `\n///|\ntest ${q(c.name)} {\n  let (summary, changes) = basic_result(${q(c.old)}, ${q(c.new)}, @model.Options::default())\n  assert_eq(summary_counts(summary), (${c.counts.join(', ')}))\n  assert_eq(change_rows(changes), [\n    ${rows}\n  ])\n}\n`;
 }).join('');
 const target = 'src/diff/basic_test.mbt';
-const formatter = spawnSync(resolve('.tools/moon/bin/moonfmt.exe'), ['-'], {
+const formatter = spawnSync('moonfmt', ['-'], {
   input: content, encoding: 'utf8', windowsHide: true,
 });
 if (formatter.error) throw formatter.error;

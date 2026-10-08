@@ -2,6 +2,14 @@
 
 Scope: tasks 1–8 authorized by the user in sequence; local development, tests, materials and small commits only.
 
+Task 9 scope (2026-10-08): CI/Linux/release preparation, local fixes/tests/docs and repository-convention commits authorized; no push/deploy/public release/submission. Base: 1ca2e88. Three untracked docs/MoonDiff-JSON-*.md supplements are preserved.
+Task 9 pre-flight: no applicable AGENTS.md found; current task branch retained. Existing acceptance drives all required checks. No remote configured. Linux setup archive/layout/hash inspected from official downloads; no available runnable Linux environment (only stopped docker-desktop WSL, unavailable Docker daemon, no Podman/connected Linux target).
+Task 9 Ruling: Continue in the user-designated F:/MOONBit checkout on its existing task branch; adapt task 9 to the approved scope without another design approval — user explicitly requests immediate execution — cost if wrong: local reversible diff and commits only.
+Task 9 Ruling: Extend existing acceptance and preserve Windows CI; use SHA-checked project-local Linux tools, explicit pinned Chromium, fresh staging plus tracked HEAD source archive — minimizes interface changes — cost if wrong: remote CI may reveal Linux runner issues, which remain explicitly untested here.
+Task 9 Ruling: Keep historical task 8 ZIPs and original runtime backup; task 9 tar.gz artifacts supersede them and record their exact source commit — preserve delivery provenance without mixing revisions — cost if wrong: consumers choosing historical ZIPs must consult the documented source_commit.
+Task 9 checks so far: npm ci and moon update passed; npm run acceptance passed on Windows: 101 core / 49 CLI / 7 Worker / 34 real-page / 225 properties, golden + generated report bytes identical. Old runtime verifier RED on missing independent serve command; fresh runtime GREEN: 19 hashes, 15 JSON/text CLI fixtures with 0/1/2, independent HTTP/page/Worker/download. CI YAML structure plus setup/env/workflow Bash syntax passed using Windows Git Bash (static only). Final archive, clean-source rebuild and diff review follow.
+Task 9 review fix: official Linux tar header stores moon/moonc/moonfmt/mooncake at mode 0664 (confirmed with Python tarfile, exact pinned SHA). setup-linux restores bin execution before sourcing environment or calling bundle. This repairs a concrete install blocker; it is not Linux runtime evidence. Packaging additionally rejects new untracked project files except the three preserved supplements, and constrains runtime output to work/release descendants.
+
 Task 1: complete.
 Task 2: complete (base 30f08a6).
 Task 3: complete (base 1802b89).

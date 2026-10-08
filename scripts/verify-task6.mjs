@@ -24,4 +24,4 @@ assert.deepEqual(cli.map(c => c.text), text);
 // The just-run real browser probe compared its Worker outputs to these same bytes.
 assert.match(browser.result, /^PASS: 15 complete analyze reports equal Node bytes/);
 console.log(`Parity: ${cli.length} reports and text outputs byte-identical across direct bridge, CLI and Chrome ${browser.browser} module Worker.`);
-console.log('Task 6 verification passed on Windows. Linux is untested; product website and formal benchmarks remain tasks 7–8.');
+console.log(`Task 6 verification passed on ${process.platform}/${process.arch}.`);

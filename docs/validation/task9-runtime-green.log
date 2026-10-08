@@ -1,0 +1,11 @@
+
+> moondiff-json@0.1.0 prepare:local
+> node scripts/prepare-local.mjs
+
+Previous runtime preserved: F:\MOONBit\work\release\moondiff-json-0.1.0.previous-1791426656343
+Local runtime prepared: F:\MOONBit\work\release\moondiff-json-0.1.0; 19 hashed files. Not published.
+
+> moondiff-json@0.1.0 verify:release
+> node scripts/verify-release.mjs
+
+Runtime PASS: 19 hashes; 15 JSON/text CLI cases with 0/1/2; independent HTTP/page/Worker/download on win32/x64, Chromium 154.0.8037.98.

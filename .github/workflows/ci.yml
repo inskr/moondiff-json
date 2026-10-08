@@ -3,40 +3,114 @@ on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
+  linux-js:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, resolved 2026-10-08
+      - name: Install hash-checked Linux x64 MoonBit and Node versions
+        run: |
+          mkdir -p work/ci
+          bash scripts/setup-linux.sh 2>&1 | tee work/ci/setup.log
+      - name: Install locked dependencies and pinned Chromium revision
+        run: |
+          source scripts/moon-env.sh
+          npm ci 2>&1 | tee work/ci/npm-ci.log
+          moon update 2>&1 | tee work/ci/moon-update.log
+          # OS browser dependencies are installed only in the disposable CI runner.
+          node node_modules/playwright-core/cli.js install --with-deps chromium 2>&1 | tee work/ci/browser-install.log
+      - name: Run full acceptance
+        run: |
+          source scripts/moon-env.sh
+          export MOONDIFF_BROWSER="$(node --input-type=module -e "import {chromium} from 'playwright-core'; console.log(chromium.executablePath())")"
+          npm run acceptance 2>&1 | tee work/ci/acceptance.log
+      - name: Prepare and verify source and standalone runtime archives
+        run: |
+          source scripts/moon-env.sh
+          export MOONDIFF_BROWSER="$(node --input-type=module -e "import {chromium} from 'playwright-core'; console.log(chromium.executablePath())")"
+          npm run prepare:release 2>&1 | tee work/ci/release.log
+      - name: Retain Linux logs and diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, resolved 2026-10-08
+        with:
+          name: acceptance-evidence-linux
+          path: |
+            work/ci/
+            work/properties/
+            work/property-failures/
+            work/probes/
+            work/web-smoke/result.json
+            output/playwright/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain verified Linux delivery archives
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-linux
+          path: |
+            work/release/task9/*.tar.gz
+            work/release/task9/delivery-manifest.json
+          if-no-files-found: error
+          retention-days: 14
   windows-js:
     runs-on: windows-2022
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, resolved 2026-10-08
       - name: Install hash-checked MoonBit and Node versions
         shell: pwsh
-        run: ./scripts/setup-windows.ps1
+        run: |
+          New-Item -ItemType Directory -Path work/ci -Force | Out-Null
+          ./scripts/setup-windows.ps1 2>&1 | Tee-Object work/ci/setup.log
+          exit $LASTEXITCODE
       - name: Install locked dependencies and pinned Chromium revision
         shell: pwsh
         run: |
           ./scripts/moon.ps1 version --all
-          npm.cmd ci
+          npm.cmd ci 2>&1 | Tee-Object work/ci/npm-ci.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          moon.exe update
+          moon.exe update 2>&1 | Tee-Object work/ci/moon-update.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          node node_modules/playwright-core/cli.js install chromium
+          node node_modules/playwright-core/cli.js install chromium 2>&1 | Tee-Object work/ci/browser-install.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Run full acceptance
         shell: pwsh
         run: |
           ./scripts/moon.ps1 version --all
           $env:MOONDIFF_BROWSER = node --input-type=module -e "import {chromium} from 'playwright-core'; console.log(chromium.executablePath())"
-          npm.cmd run acceptance 2>&1 | Tee-Object acceptance.log
+          npm.cmd run acceptance 2>&1 | Tee-Object work/ci/acceptance.log
+          exit $LASTEXITCODE
+      - name: Prepare and verify source and standalone runtime archives
+        shell: pwsh
+        run: |
+          ./scripts/moon.ps1 version --all
+          $env:MOONDIFF_BROWSER = node --input-type=module -e "import {chromium} from 'playwright-core'; console.log(chromium.executablePath())"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm.cmd run prepare:release 2>&1 | Tee-Object work/ci/release.log
           exit $LASTEXITCODE
       - name: Retain logs, failure samples and browser artifacts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, resolved 2026-10-08
         with:
-          name: acceptance-evidence
+          name: acceptance-evidence-windows
           path: |
-            acceptance.log
+            work/ci/
             work/properties/
             work/property-failures/
+            work/probes/
             work/web-smoke/result.json
             output/playwright/
-          if-no-files-found: ignore
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Retain verified Windows delivery archives
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-windows
+          path: |
+            work/release/task9/*.tar.gz
+            work/release/task9/delivery-manifest.json
+          if-no-files-found: error
+          retention-days: 14

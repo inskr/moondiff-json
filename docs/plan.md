@@ -152,6 +152,25 @@
 
 ## 验证命令与状态报告
 
+### Task 9：远程 CI 与 Linux 验证准备（2026-10-08 用户授权）
+
+**Scope:** 本地配置、必要兼容修复、验证、交付文档和按已有约定小步提交。
+不推送、不部署、不创建远程发布、不报名；保留全部用户文件和已有改动。
+
+**Files:** .github/workflows/ci.yml、scripts/setup-linux.sh、scripts/moon-env.sh、
+scripts/generate-*-tests.mjs、scripts/prepare-local.mjs、scripts/package-local.mjs、
+scripts/verify-release.mjs、README.md、docs/ci-linux.md、docs/validation/task9-*。
+
+**Interfaces:** 复用 npm run acceptance；新增 npm run prepare:release 从干净已提交 HEAD
+生成源码/运行包并验证解压包，交付 manifest 记录对应提交与 SHA256。
+
+- [ ] 读取仓库约定、计划、验收与 CI，核对 9c0d4dd / 1ca2e88 和初始 Git 状态。
+- [ ] 增加 Linux CI，保留 Windows；固定版本、手动触发、失败日志和两类产物。
+- [ ] 检查大小写、分隔符、Windows 命令、编码/换行/执行位、独立运行和残留依赖；最小修复。
+- [ ] 探测现有 Linux 环境，可用则实测，否则明确“Linux 尚未实测”。
+- [ ] 运行统一验收、运行包独立启动/三端字节检查、静态 CI/Bash 检查和源码重建。
+- [ ] 更新命令、触发/下载、状态和授权后的步骤；审阅 diff、小步提交并重生成匹配 HEAD 的交付包。
+
 MoonBit 候选命令：moon check --target js、moon test --target js、moon build --target js；执行前用实际安装版 --help 核对语法。JS 脚本定义后运行 npm run acceptance、npm run bench；不要在脚本不存在时声称已运行。
 
 每个任务报告：完成内容、实际运行命令与结果、未通过项、下一步。错误和性能数据如实保留；不以文档存在或界面截图替代核心验收。
