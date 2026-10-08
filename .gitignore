@@ -8,3 +8,24 @@
 /dist/
 /node_modules/
 /.mooncakes/
+
+# Local planning, evidence and delivery material (kept on disk, not published).
+/MoonDiff-JSON-Agent-Prompt.md
+/MoonDiff-JSON-Execution-Plan.md
+/MoonDiff-JSON-Spec.md
+/docs/MoonDiff-JSON-*.md
+/docs/plan.md
+/docs/progress.md
+/docs/spec.md
+/docs/task-1-preflight.md
+/docs/basic-comparison.md
+/docs/model-and-primitives.md
+/docs/ai-usage.md
+/docs/ecosystem.md
+/docs/project-one-pager.md
+/docs/delivery.md
+/docs/demo.md
+/docs/demo/
+/docs/validation/
+/bench/results.md
+/bench/results.json

@@ -64,7 +64,8 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Path work/ci -Force | Out-Null
-          ./scripts/setup-windows.ps1 2>&1 | Tee-Object work/ci/setup.log
+          $taskSetupLog = Join-Path $PWD 'work/ci/setup.log'
+          ./scripts/setup-windows.ps1 2>&1 | Tee-Object $taskSetupLog
           exit $LASTEXITCODE
       - name: Install locked dependencies and pinned Chromium revision
         shell: pwsh

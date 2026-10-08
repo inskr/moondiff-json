@@ -1,7 +1,0 @@
-[local/moondiff-json] test src/bridge/client_error_test.mbt:2 ("client IO error preserves the exact fixed envelope") failed: src/bridge/client_error_test.mbt:3:3-6:4@local/moondiff-json FAILED: `"{}" != "{\"schema_version\":\"1.0\",\"ok\":false,\"error\":{\"code\":\"IO_ERROR\",\"message\":\"Could not read input\",\"side\":\"old\",\"path\":null,\"line\":null,\"column\":null}}"`
-diff:
--"{}"
-+"{\"schema_version\":\"1.0\",\"ok\":false,\"error\":{\"code\":\"IO_ERROR\",\"message\":\"Could not read input\",\"side\":\"old\",\"path\":null,\"line\":null,\"column\":null}}"
-[local/moondiff-json] test src/bridge/client_error_test.mbt:10 ("client encoding and argument errors are MoonBit formatted") failed: local/moondiff-json/src/model/base.DiffError.Failure
-[local/moondiff-json] test src/bridge/client_error_test.mbt:24 ("client errors quote messages and reject unsupported metadata") failed: src/bridge/client_error_test.mbt:31:14-31:47@local/moondiff-json FAILED: missing error information
-Total tests: 101, passed: 98, failed: 3.

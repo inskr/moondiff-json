@@ -1,7 +1,0 @@
-equal: false
-added: 0 removed: 0 modified: 1 reordered: 0 ignored_subtrees: 1
-modified old="/timeout" new="/timeout"
-  before: 30
-  after: 60
-Text exit: 1; JSON exit: 1
-{"schema_version":"1.0","ok":true,"equal":false,"summary":{"added":0,"removed":0,"modified":1,"reordered":0,"ignored_subtrees":1},"changes":[{"kind":"modified","old_path":"/timeout","new_path":"/timeout","before":{"present":true,"json_text":"30"},"after":{"present":true,"json_text":"60"},"identity":null}]}

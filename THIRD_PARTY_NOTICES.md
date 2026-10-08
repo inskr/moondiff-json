@@ -37,4 +37,4 @@ downloaded by its official CLI solely as a development tool; no stock media or m
 
 RFC 6901 reference: https://www.rfc-editor.org/rfc/rfc6901 .
 Existing source-diff project (comparison only, no code dependency):
-https://mooncakes.io/docs/moonbit-community/moondiff . No public publication has occurred.
+https://mooncakes.io/docs/moonbit-community/moondiff .

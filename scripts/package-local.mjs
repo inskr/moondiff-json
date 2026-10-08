@@ -14,8 +14,7 @@ function run(command,args,{ capture = false } = {}) {
 }
 if (process.version !== 'v22.23.3') throw new Error('Packaging requires pinned Node v22.23.3.');
 if (run('git',['status','--porcelain','--untracked-files=no'],{capture:true})) throw new Error('Commit tracked changes before packaging; source must match the runtime. User untracked files are not archived.');
-const supplements = new Set(['docs/MoonDiff-JSON-Agent-Prompt.md','docs/MoonDiff-JSON-Execution-Plan.md','docs/MoonDiff-JSON-Spec.md']);
-const newFiles = run('git',['ls-files','--others','--exclude-standard','-z'],{capture:true}).split('\0').filter(Boolean).filter(file => !supplements.has(file));
+const newFiles = run('git',['ls-files','--others','--exclude-standard','-z'],{capture:true}).split('\0').filter(Boolean);
 if (newFiles.length) throw new Error(`Commit new project files before packaging so source and runtime agree: ${newFiles.join(', ')}`);
 const commit = run('git',['rev-parse','HEAD'],{capture:true});
 await mkdir(output,{recursive:true});

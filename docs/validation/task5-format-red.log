@@ -1,2 +1,0 @@
-[local/moondiff-json] test src/report/report_test.mbt:20 ("formatter rejects inconsistent counts slots pointers and embedded JSON") failed: src/report/report_test.mbt:28:93-28:129@local/moondiff-json FAILED: inconsistent report accepted
-Total tests: 98, passed: 97, failed: 1.

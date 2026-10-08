@@ -1,12 +1,12 @@
-# 严格选项与报告（任务 5）
+# 严格选项与报告
 
 核心 MVP 现在通过相同的 MoonBit analyze 服务于 Node 和浏览器模块 Worker。
 选项、输入校验、比较、JSON 序列化和文字呈现均在 MoonBit 内完成。
 
 ## 字符串协议
 
-构建命令是 `scripts/build-js.mjs`（需要由 scripts/moon.ps1 设置项目工具链环境）。
-`scripts/verify-task5.ps1` 会执行完整构建及验收。
+构建命令是 `scripts/build-js.mjs`，先按 README 设置当前平台工具环境。
+`npm run acceptance` 执行完整构建及验收。
 入口 `dist/moondiff-json.mjs` 同目录依赖 `moondiff-json-core.mjs`；发布或复制时须保留两者。
 
 `analyze(old_text, new_text, options_text = "{}")` 返回 JSON 报告字符串。
@@ -80,17 +80,3 @@ JSON CLI 输出与 analyze 返回的字符串逐字节相同，不额外加换�
 10000 条变化的 envelope 元数据节点可超过 100000，且输出可大于单侧输入上限。
 文字入口不会把文档的 2 MiB/100000 节点限额误用于完整报告；
 它仍严格拒绝重复字段/尾随输入、在解析时限制深度，并验证变化条数及报告结构。
-
-## 实测和复现
-
-2026-10-07：Windows 11 x64 10.0.22631、i7-12700H、
-moon 0.1.20260920、moonc 0.10.14+7d59c7ec9、Node 22.23.3、Chrome 154.0.8037.98。
-`scripts/verify-task5.ps1` 实际退出 0，98/98 MoonBit 测试通过，JS deny-warn check 和 release build 通过。
-保存的 7 个报告夹具匹配完整黄金字节；8 个错误案例检查固定错误形状和位置。
-15 个 Node 和真实 Chrome Worker 的完整 JSON、文字输出逐字节一致；原 12 项解析桥接回归仍通过。
-
-覆盖默认/下调的字节、节点、深度、数字边界、忽略不能跳过校验、
-10000 条变化完整成功与 10001 条 CHANGE_LIMIT，以及三个演示场景。
-没有把这一结果当作尚未实现的 CLI 或产品网页验收，也未运行任务 8 的正式性能基准。
-RED、回归失败、兼容性诊断和最终结果保存在 docs/validation/task5-*.log。
-完整报告夹具位于 fixtures/reports，错误案例位于 fixtures/errors。

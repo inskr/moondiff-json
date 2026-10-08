@@ -1,7 +1,7 @@
-# 比较语义（完成至任务 5）
+# 比较语义
 
-本阶段提供 MoonBit `diff_documents(Document, Document, Options)` 核心接口。
-选项 JSON 严格解析及正式 analyze/report 字符串接口已在任务 5 实现，
+核心提供 MoonBit `diff_documents(Document, Document, Options)` 核心接口。
+选项 JSON 严格解析及正式 analyze/report 字符串接口由核心实现，
 接口与错误协议见 reports-and-options.md。
 
 ## 通用比较
@@ -12,7 +12,7 @@ null、缺失、数字和字符串分别处理。数字从原始 token 正规化
 1、1.0、1e0 相等，相邻大整数保持不同；片段保留原始数字 token。
 路径采用 RFC 6901，根为 ""，空字段名为 "/"，旧新路径独立记录。
 默认数组按共享索引比较，再新增/删除尾部；中间插入可能引起多个 modified。
-更多基础规则见 basic-comparison.md。
+
 
 ## 显式唯一键数组
 
@@ -68,23 +68,3 @@ reordered 的 before/after 为对应侧共有身份序列，不包含只在一�
 
 所有变化（包括 reordered）计入 max_changes。超限抛错，不返回部分成功报告。
 比较只取一次每侧 Document 快照，不修改原文档或调用者的 Options。
-
-## 真实验证记录
-
-2026-10-07，Windows 11 x64（10.0.22631）、i7-12700H，
-moon 0.1.20260920、moonc 0.10.14+7d59c7ec9、Node 22.23.3、Chrome 154.0.8037.98：
-任务 4 RED 为 25 失败/51 通过，GREEN 为全部 76/76 通过；
-15 个唯一键夹具保存完整输入、计数、路径、片段和身份断言。
-JS check --deny-warn、fmt、受控 Document 边界和 release build 通过；
-12 个 Node 与 12 个真实浏览器模块 Worker 的解析诊断字节一致。
-
-10000 身份反序用例单独运行 1/1 通过，命令总耗时 568.1 ms。
-此计时包括测试进程启动、夹具生成、解析、两次比较及断言，不是任务 8 的正式性能基准。
-默认顺序策略返回零变化；check_order 返回一条 reordered。
-实现只做每侧顺序索引、Map 查找、共有身份过滤和键集合排序，无全数组两两扫描。
-匹配成本 O(N)，身份输出排序额外 O(K log K)，序列化按实际输出规模计入。
-日志保存在 docs/validation/task4-red.log 与 task4-final.log。
-
-复现：`.\scripts\verify-task4.ps1`。
-修改唯一键夹具后运行项目内 Node 22 的 `scripts/generate-keyed-tests.mjs`，再运行 MoonBit fmt 和验证。
-尚未完成正式报告、CLI 或网页，因此不把解析诊断回归当作三端差异报告验收。

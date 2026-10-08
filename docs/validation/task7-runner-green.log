@@ -1,8 +1,0 @@
-PASS original strings reach the worker; only current ID is accepted
-PASS superseded worker cannot publish even with the current ID
-PASS cancel terminates work, rejects late callbacks and rebuilds on next run
-PASS timeout terminates work and does not manufacture a core report
-PASS worker failure stays a visible runtime error and permits recovery
-PASS idle worker is reused for offline comparisons and stale error callbacks are ignored
-PASS closing the page invalidates work and closes its worker
-Worker runner: 7/7 passed, 0 failed (v22.23.3).

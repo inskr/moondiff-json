@@ -1,7 +1,0 @@
-{
-  "result": "PASS: 12 browser Worker outputs equal Node bytes\nMozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
-  "node": "v22.23.3",
-  "browser": "154.0.8037.98",
-  "executablePath": "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "mode": "headless; real-time module Worker; localhost HTTP"
-}
