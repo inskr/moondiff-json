@@ -1,0 +1,14 @@
+
+> moondiff-json@0.1.0 demo:record
+> node scripts/record-demo.mjs
+
+Recording 0.0s: MoonDiff JSON · MoonBit 结构化差异
+Recording 18.4s: 01 配置审查
+Recording 29.1s: 只报告 timeout: 30 → 60；ignored_subtrees = 1。
+Recording 47.3s: 02 API 用户数组
+Recording 57.8s: 用户 b 的 quota: 20 → 21。
+Recording 77.3s: check_order: true 时报告一条 reordered。
+Recording 96.6s: 03 精确数字
+Recording 117.0s: 身份 1 与 1.0 数值相同，报 INVALID_ARRAY_KEY。
+Recording 137.2s: 本地复现：npm run acceptance / npm run bench / npm run serve
+Recorded 151.27s, 11409611 bytes, six exact golden downloads; docs/demo/moondiff-json.webm

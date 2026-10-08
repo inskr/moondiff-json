@@ -1,7 +1,28 @@
-# MoonDiff JSON 本地演示（任务 7）
+# MoonDiff JSON 本地演示与实际录像
 
 目前核心、CLI 和静态网页均可运行；还未公开部署或报名提交。
-本文件是可复现的演示步骤，任务 8 再准备正式视频、性能记录与最终材料。
+本文件包含可复现步骤和任务 8 的真实录像；性能记录见 ../bench/results.md。
+
+## 录像与复现
+
+[观看 / 下载 WebM](demo/moondiff-json.webm)，1440×1080，约 2 分 31 秒，25 fps。
+实际 Chrome 页面由 Playwright 自动操作，中文字幕在录制会话内叠加；无配音、无倍速。
+时间和 SHA256 见 [recording.json](demo/recording.json)，字幕另存 [captions.vtt](demo/captions.vtt)。
+依次展示配置忽略、唯一键与双侧路径、共有身份重排、相邻大整数、重复身份错误和复现命令。
+六个下载均对照完整黄金报告字节验证。脚本或截图不是录像的替代物，WebM 为实际编码文件。
+
+重新录制（需安装仅用于开发的固定 Playwright FFmpeg revision）：
+
+```powershell
+.\scripts\moon.ps1 version --all
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) 'work/playwright-runtime'
+& node.exe node_modules/playwright-core/cli.js install ffmpeg
+& npm.cmd run demo:record
+& node.exe scripts/verify-demo.mjs
+```
+
+recording 与 verify-demo 将生成视频、元信息和七个抽帧，现有录像文件会被替换。
+原始脚本日志在 docs/validation/task8-demo-record.log；软件本身不依赖 FFmpeg。
 
 ## 启动
 
@@ -84,4 +105,6 @@ Worker 超时／晚到／失败测试采用测试工具控制的实际浏览器 
 日志在 docs/validation/task7-*.log，原始浏览器记录在 task7-browser-result.json。
 实际桌面与窄屏截图保存在本地 output/playwright/task7-*.png，已检查布局、长值、中文、
 null／缺失和身份路径；该目录为可再生成的忽略产物。
-任务 7 功能冻结。正式基准、CI、干净重建、AI 使用说明、一页说明和视频仍属任务 8。
+任务 7 功能保持冻结。任务 8 已补统一验收、真实基准、CI 配置、干净重建和材料；
+CI 尚未在远程运行。录像经 Chrome 解码验证 150.92 秒、1440×1080，七个场景均不同，
+并已目视检查唯一键双侧路径、相邻大整数与错误画面。见 demo/playback-verification.json。

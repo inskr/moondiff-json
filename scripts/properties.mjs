@@ -59,6 +59,7 @@ for (const [index,c] of selected.entries()) {
 }
 if (process.exitCode) process.exit(process.exitCode);
 await mkdir('work/properties',{ recursive:true });
+await writeFile('work/properties/cases.json',JSON.stringify(selected,null,2));
 let browser, server;
 try {
   const started = await startServer(); server = started.server;
@@ -68,11 +69,20 @@ try {
   const workerResults = await page.evaluate(async inputs => {
     const worker = new Worker('./worker.js',{ type:'module' });
     try {
-      await new Promise((resolve,reject) => { worker.onerror = reject; worker.onmessage = ({data}) => data.type === 'ready' && resolve(); });
+      await new Promise((resolve,reject) => {
+        const timer = setTimeout(() => reject(new Error('Worker ready timeout')),5000);
+        worker.onerror = error => { clearTimeout(timer); reject(error); };
+        worker.onmessage = ({data}) => { if (data.type === 'ready') { clearTimeout(timer); resolve(); } };
+      });
       const results = [];
       for (const [i,c] of inputs.entries()) results.push(await new Promise((resolve,reject) => {
-        worker.onerror = reject;
-        worker.onmessage = ({data}) => data.type === 'result' ? resolve(data.report_text) : reject(new Error(data.message));
+        const timer = setTimeout(() => reject(new Error(`Worker timeout: ${c.name}`)),5000);
+        worker.onerror = error => { clearTimeout(timer); reject(error); };
+        worker.onmessage = ({data}) => {
+          if (data.request_id !== i) return;
+          clearTimeout(timer);
+          data.type === 'result' ? resolve(data.report_text) : reject(new Error(`${c.name}: ${data.message}`));
+        };
         worker.postMessage({ type:'analyze',request_id:i,old_text:c.old,new_text:c.new,options_text:c.options });
       }));
       return results;

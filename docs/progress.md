@@ -1,6 +1,6 @@
 # Execution ledger — plan: F:/MOONBit/docs/plan.md
 
-Scope: tasks 1–7 authorized by the user in sequence.
+Scope: tasks 1–8 authorized by the user in sequence; local development, tests, materials and small commits only.
 
 Task 1: complete.
 Task 2: complete (base 30f08a6).
@@ -9,7 +9,7 @@ Task 4: complete (base 9cf462a).
 Task 5: complete (base 2621e4d).
 Task 6: complete (base df9d62a).
 Task 7: complete (base b98131d).
-Task 8: pending.
+Task 8: complete (base 217e924; first increment 9c0d4dd; final material/evidence commit follows).
 
 Pre-flight interfaces:
 - 1 → 2/5: parser must preserve raw number tokens, reject duplicate decoded keys and limit depth during parsing; verified API will determine adapter types.
@@ -21,7 +21,7 @@ Pre-flight interfaces:
 Ruling: Work in the designated, previously empty project directory on a new local task branch. No existing implementation or user changes are replaced; no additional worktree is needed.
 Ruling: The supplied spec and plan are approved. Do not repeat brainstorming approval or create a competing plan. Current-agent sequential execution overrides skill suggestions to delegate.
 
-Task 8: in progress (base 217e924). Add unified acceptance, fixed-seed properties, actual benchmarks, CI, clean rebuild, runtime license bundle and hackathon materials including an actual 2–3 minute recording. Preserve sequential execution and all user supplemental documents. No public operations authorized.
+Task 8: complete (base 217e924). Unified npm acceptance passed at root and fresh source directory: 101 core, 49 CLI, 7 Worker lifecycle, 34 actual-page, 225 fixed-seed properties; 15 golden and 15 generated reports byte-equal across bridge/CLI/Worker. Nine benchmark cases each actually ran 5 warmups/20 measurements, with raw results retained: about 1 MiB per side, 10000 records, 10 fields changed; positional/keyed median 77.559/99.421 ms. Fresh snapshot 9c0d4dd rebuilt using only hash-checked cached tool download archives, no dependency/build outputs copied; core JS SHA256 identical. Actual re-recorded video verified at 150.92s, 1440x1080, seven decoded scenes and six exact golden downloads; keyed paths/precision/errors visually checked. CI with pinned tools/dependencies/browser revision/action SHAs prepared, not remotely executed. MIT/runtime license texts, ecosystem, AI-use, one-pager and demo materials complete. Current-agent inline review and final npm acceptance passed; no core precision/feature/report changes. Preserve all three user supplemental documents. Linux and remote CI untested; public push/deploy/package/tag/submission await explicit authorization. Evidence: docs/validation/task8-*.log, task8-review.md, bench/results.json, docs/demo/recording.json and playback-verification.json.
 Ruling: Adapt Bash-only skill bookkeeping to the existing PowerShell environment and keep a tracked ledger here; do not install an extra shell for bookkeeping.
 
 Initial environment: Node v24.19.0, npm 11.17.0, Git 2.50.1.windows.1; moon not found. Need project-local official toolchain and target Node 22.

@@ -40,6 +40,9 @@ bench 独立运行，每项预热 5 次、测量 20 次，包含解析、校验�
 主案例每侧约 1 MiB、10000 记录、10 字段变化：位置中位数 77.559 ms，唯一键中位数 99.421 ms。
 完整结果、版本和原始样本见 [bench/results.md](bench/results.md) 与 [bench/results.json](bench/results.json)。
 2026-10-08 本机统一验收通过，见 [日志](docs/validation/task8-acceptance.log)。
+从提交 9c0d4dd 的源码归档在新目录重建并再次完整验收通过，
+只复用会重新校验 SHA256 的工具下载归档，没有复制任何构建或依赖安装输出；
+见 [干净重建日志](docs/validation/task8-clean-rebuild.log)。两目录生成的核心 JS SHA256 相同。
 
 [CI 配置](.github/workflows/ci.yml) 固定 Windows runner 系列、工具/依赖和 action SHA；
 浏览器用 Playwright 固定 Chromium revision。远程 CI 尚未运行。
