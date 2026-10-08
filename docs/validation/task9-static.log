@@ -5,3 +5,6 @@ PASS: all Linux workflow run blocks Bash syntax
 Linux unavailable: WSL only stopped docker-desktop, Docker Linux daemon unavailable, no Podman or connected Linux target.
 Linux 尚未实测; remote CI 尚未运行; no git remote configured.
 Confirmed via Python tarfile: pinned official MoonBit bin/moon, moonc, moonfmt, mooncake mode 0664, no executable bits. Installer now restores bin execution before environment check/bundle; Bash syntax rechecked (static only).
+PASS: actual untracked .mbt sentinel rejected before packaging build; sentinel removed.
+PASS: prepare-local destination F:\MOONBit\web rejected before mutation.
+PASS: git source archive stores CLI and setup-linux with executable bits.

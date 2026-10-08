@@ -2,6 +2,9 @@
 
 状态日期：2026-10-08（Asia/Shanghai）。本阶段只做本地准备。
 **Linux 尚未实测；远程 GitHub Actions 尚未运行。** Windows 验证证据见 docs/validation/task9-*。
+任务 9 根目录及 00a093c 源码归档的全新目录验收均通过；核心构建 SHA256 相同。
+完成记录提交仅更新文档/证据，交付包随后重新生成到最终 HEAD；精确提交和包 SHA256 以
+work/release/task9/delivery-manifest.json 为准。审阅记录见 [task9-review.md](validation/task9-review.md)。
 本机 WSL 只有停止的 docker-desktop，没有通用发行版；Docker CLI 29.8.0 存在但 Linux daemon
 不可用；无 Podman 或已连接 Linux 执行环境。未安装/启动系统组件或修改系统配置。
 

@@ -1,0 +1,10 @@
+
+> moondiff-json@0.1.0 prepare:release
+> node scripts/package-local.mjs
+
+Finished. moon: no work to do
+Bridge artifact: _build\js\release\build\src\bridge\bridge.js -> dist/moondiff-json-core.mjs; string facade: dist/moondiff-json.mjs
+Local runtime prepared: F:\MOONBit\work\release\task9\.package-IDCyT1\moondiff-json-0.1.0; 19 hashed files. Not published.
+Runtime PASS: 19 hashes; 15 JSON/text CLI cases with 0/1/2; independent HTTP/page/Worker/download on win32/x64, Chromium 154.0.8037.98.
+Runtime PASS: 19 hashes; 15 JSON/text CLI cases with 0/1/2; independent HTTP/page/Worker/download on win32/x64, Chromium 154.0.8037.98.
+Release preparation PASS: F:\MOONBit\work\release\task9; source/runtime revision 00a093c6367ba5f39a12fc9cac45eaa5a70b56b5. Not published.
